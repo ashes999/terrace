@@ -6,8 +6,23 @@
 			var w = new WEBRUBY();
 			var source = `
 				$window = MrubyJs::get_root_object
-				puts "Window is $window"
-				puts "The time is now #{Time.new}"
+				$crafty = $window.Crafty
+				#puts "Window is $window"
+				#puts "The time is now #{Time.new}"
+				
+				class Game
+					def initialize
+						$crafty.init(800, 600)
+						$crafty.background('black')
+						e = $crafty.e('2D, Canvas, Color, Alpha, Fourway')
+						e.attr({ :w => 32, :h => 32 })
+						e.color('red')
+						e.fourway(16)
+						puts "Hi-ho, crafty!"
+					end
+				end
+				
+				Game.new				
 				`;
 			w.run_source(source);			
 		}
