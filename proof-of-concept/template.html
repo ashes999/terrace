@@ -4,8 +4,11 @@
 	<script type="text/javascript">
 		window.onload = function() {
 			var w = new WEBRUBY();
-			var source = "require ./main.rb; Main.new.run"
-			//var source = '$window = MrubyJs::get_root_object; puts "Window is $window"; puts "The time is now #{Time.new}"';
+			var source = `
+				$window = MrubyJs::get_root_object
+				puts "Window is $window"
+				puts "The time is now #{Time.new}"
+				`;
 			w.run_source(source);			
 		}
 	</script>
