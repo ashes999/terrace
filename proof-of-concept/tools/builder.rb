@@ -5,7 +5,6 @@ class Builder
   ENTRY_POINT = 'main.rb'    
   CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] # ENTRY_POINT is added last
   OUTPUT_DIR = 'bin'
-  DIRECTORY_EXCLUSIONS = [OUTPUT_DIR, 'tools']  
   TARGETS = { 'js-crafty' => 'JsCraftyBuilder' }
   
   # Builds and combines all ruby files; generates final output project
@@ -39,21 +38,12 @@ class Builder
   def amalgamate_code_files
     print 'Concatenating ruby files '
     final_code = ''
-    files = Dir.glob('**/*.rb')
+    files = Dir.glob('pearl/**/*') + Dir.glob('src/**/*.rb') 
     
     # TODO: what order do we traverse? These are alphabetical, not even listed
     # by directory/subdirectory first. Should we build a graph of dependencies?
     # TODO: do we need to append the entry point last? Why not just leave it up to the user?
     files.each do |f|
-      
-      next if CODE_EXCLUSIONS.include?(f) # don't add excluded files
-      # Don't add stuff from excluded directories
-      exclude = false
-      DIRECTORY_EXCLUSIONS.each do |d|
-        exclude = true if f.index("#{d}/") == 0 # Don't add files from bin/*
-      end
-      
-      next if exclude
       file_code = File.read(f)
       final_code = "#{final_code}\n#{file_code}"
       print '.'

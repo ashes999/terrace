@@ -26,14 +26,7 @@ class JsCraftyBuilder < Builder
       f.write(template_with_code)
     }
     
-    directories = Dir.glob('**/*/')    
-    directories.each do |d|
-      d = d[0, d.rindex('/')] # remove trailing slash      
-      if DIRECTORY_EXCLUSIONS.include?(d)
-        next
-      end      
-      FileUtils.cp_r(d, "#{OUTPUT_DIR}/#{d}")
-    end
+    FileUtils.cp_r('lib', "#{OUTPUT_DIR}/lib")
     
     # Keep one of: webruby-debug or webruby-release
     delete = @mode == :debug ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
