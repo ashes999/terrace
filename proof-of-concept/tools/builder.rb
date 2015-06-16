@@ -10,16 +10,16 @@ class Builder
   # Builds and combines all ruby files; generates final output project
 	def build
     if ARGV[0].nil?
-      target = TARGETS.first[0] # key (eg. js-crafty)
+      @target = TARGETS.first[0] # key (eg. js-crafty)
     else
-      target = ARGV[0]
-      raise "#{ARGV[0]} target is not supported" if target.nil?
+      @target = ARGV[0]
+      raise "#{ARGV[0]} target is not supported" if @target.nil?
     end
     
     ensure_file_exists(ENTRY_POINT)    
-    puts "Buidling #{target} target ..."
+    puts "Buidling #{@target} target ..."
     
-    builder_class = Object.const_get(TARGETS[target])
+    builder_class = Object.const_get(TARGETS[@target])
     @builder = builder_class.new
     @code = amalgamate_code_files
     build_result
@@ -38,7 +38,7 @@ class Builder
   def amalgamate_code_files
     print 'Concatenating ruby files '
     final_code = ''
-    files = Dir.glob('pearl/**/*') + Dir.glob('src/**/*.rb') 
+    files = Dir.glob("pearl/#{@target}/**/*.rb") + Dir.glob('src/**/*.rb') 
     
     # TODO: what order do we traverse? These are alphabetical, not even listed
     # by directory/subdirectory first. Should we build a graph of dependencies?
