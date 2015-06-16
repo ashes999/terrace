@@ -9,6 +9,7 @@ class JsCraftyBuilder < Builder
   def initialize
     mode = ARGV[1] || "debug"
     raise "Can't build in '#{mode}' mode" if WEBRUBY_FILES[mode.to_sym].nil?
+    puts "Building in #{mode} mode"
     @mode = mode.to_sym
 		ensure_build_files_exist
     ensure_source_placeholder_exists

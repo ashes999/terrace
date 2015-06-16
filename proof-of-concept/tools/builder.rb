@@ -3,22 +3,22 @@ class Builder
   require './tools/js_crafty_builder'
   
   ENTRY_POINT = 'main.rb'    
-  CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] 
+  CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] # ENTRY_POINT is added last
   OUTPUT_DIR = 'bin'
   DIRECTORY_EXCLUSIONS = [OUTPUT_DIR, 'tools']  
   TARGETS = { 'js-crafty' => 'JsCraftyBuilder' }
   
-  # Builds and combines all ruby files; generates final output HTML/project
+  # Builds and combines all ruby files; generates final output project
 	def build
     if ARGV[0].nil?
-      target = TARGETS.first[0] # key
+      target = TARGETS.first[0] # key (eg. js-crafty)
     else
-      target = TARGETS[ARGV[0]]
+      target = ARGV[0]
       raise "#{ARGV[0]} target is not supported" if target.nil?
     end
     
     ensure_file_exists(ENTRY_POINT)    
-    puts "Buidling #{target} target in #{@mode} mode ..."
+    puts "Buidling #{target} target ..."
     
     builder_class = Object.const_get(TARGETS[target])
     @builder = builder_class.new
