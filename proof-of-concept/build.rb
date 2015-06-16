@@ -1,10 +1,10 @@
 class Builder
   require 'fileutils'
   
-  # The code 
+  ENTRY_POINT = 'main.rb'
   HTML_TEMPLATE = 'template.html'
   WEBRUBY_FILES = { :debug => 'lib/webruby-debug.js', :release => 'lib/webruby-release.js' }
-  CODE_EXCLUSIONS = ['build.rb' ] 
+  CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] 
   OUTPUT_DIR = 'bin'
   OUTPUT_FILE = 'index.html'
   DIRECTORY_EXCLUSIONS = [OUTPUT_DIR]
@@ -27,6 +27,7 @@ class Builder
   
   # Make sure our build files exist on disk
   def ensure_build_files_exist
+    ensure_file_exists(ENTRY_POINT)
     ensure_file_exists(HTML_TEMPLATE)
     WEBRUBY_FILES.each do |config, file|
       ensure_file_exists(file)
@@ -59,6 +60,10 @@ class Builder
       final_code = "#{final_code}\n#{file_code}"
       print '.'
     end
+    
+    # Add entry-point code lasts, since it depends on everything else
+    entry_point = File.read(ENTRY_POINT)
+    final_code = "#{final_code}\n#{entry_point}"
     
     puts ' done.'
     return final_code
