@@ -35,7 +35,7 @@ To play the game, open `bin/index.html` in your browser.
 
 # Supported Targets
 
-Currently, we are working on supporting the following platforms:
+Currently, we are working on supporting the following target:
 
 - Web (Javascript)
 - Desktop (Linux)
