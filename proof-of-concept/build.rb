@@ -2,7 +2,6 @@ class Builder
   require 'fileutils'
   
   # The code 
-  ENTRY_POINT = 'main.rb'
   HTML_TEMPLATE = 'template.html'
   WEBRUBY_FILES = { :debug => 'lib/webruby-debug.js', :release => 'lib/webruby-release.js' }
   CODE_EXCLUSIONS = ['build.rb' ] 
@@ -10,6 +9,7 @@ class Builder
   OUTPUT_FILE = 'index.html'
   DIRECTORY_EXCLUSIONS = [OUTPUT_DIR]
   SOURCE_PLACEHOLDER = 'puts \'Put your code in .rb files, not here\''
+  WEBRUBY_PLACEHOLDER = 'src="lib/webruby.js"'
   
   # Builds and combines all ruby files; generates final output HTML/project
 	def build
@@ -27,7 +27,6 @@ class Builder
   
   # Make sure our build files exist on disk
   def ensure_build_files_exist
-    ensure_file_exists(ENTRY_POINT)
     ensure_file_exists(HTML_TEMPLATE)
     WEBRUBY_FILES.each do |config, file|
       ensure_file_exists(file)
@@ -44,8 +43,9 @@ class Builder
     raise "Template #{HTML_TEMPLATE} doesn't include placeholder #{SOURCE_PLACEHOLDER}" unless content.include?(SOURCE_PLACEHOLDER)
   end
   
-  # Combine all Ruby files together; append the ENTRY_POINT last.
+  # Combine all Ruby files together.
   def amalgamate_code_files
+    print 'Concatenating ruby files '
     final_code = ''
     files = Dir.glob('**/*.rb')
     
@@ -53,12 +53,14 @@ class Builder
     # by directory/subdirectory first. Should we build a graph of dependencies?
     # TODO: do we need to append the entry point last? Why not just leave it up to the user?
     files.each do |f|
-      next if CODE_EXCLUSIONS.include?(f)
+      next if CODE_EXCLUSIONS.include?(f) # don't add excluded files
+      next if f.index('bin/') == 0 # Don't add files from bin/*
       file_code = File.read(f)
-      final_code = "#{final_code}#{file_code}"
-      puts "Processed #{f}"
+      final_code = "#{final_code}\n#{file_code}"
+      print '.'
     end
     
+    puts ' done.'
     return final_code
   end
   
@@ -71,28 +73,27 @@ class Builder
     FileUtils.rm_rf(OUTPUT_DIR) if Dir.exist?(OUTPUT_DIR)
     FileUtils.mkdir_p(OUTPUT_DIR)
     
+    # Substitute code into the template
     template_with_code = File.read(HTML_TEMPLATE).sub(SOURCE_PLACEHOLDER, code)
+    # Specify debug/release version of webruby
+    template_with_code = template_with_code.sub(WEBRUBY_PLACEHOLDER, WEBRUBY_PLACEHOLDER.sub('.js', "-#{mode}.js"))
     File.open("#{OUTPUT_DIR}/#{OUTPUT_FILE}", 'w') { |f|
       f.write(template_with_code)
     }
-    puts "Wrote HTML and code to #{OUTPUT_DIR}/#{HTML_TEMPLATE}"
     
     directories = Dir.glob('**/*/')    
     directories.each do |d|
       d = d[0, d.rindex('/')] # remove trailing slash      
       if DIRECTORY_EXCLUSIONS.include?(d)
-        puts "Skipping #{d}"
         next
       end      
       FileUtils.cp_r(d, "#{OUTPUT_DIR}/#{d}")
-      puts "Copied #{d} directory"
     end
     
     # Keep one of: webruby-debug or webruby-release
     delete = mode == :debug ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
     delete = "#{OUTPUT_DIR}/#{delete}"
     FileUtils.rm_f delete
-    puts "DELETED #{delete}"
     
     puts "Done!"
   end
