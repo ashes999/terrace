@@ -4,18 +4,23 @@ class Builder
   # The code 
   ENTRY_POINT = 'main.rb'
   HTML_TEMPLATE = 'template.html'
-  CODE_EXCLUSIONS = ['build.rb']
+  WEBRUBY_FILES = { :debug => 'lib/webruby-debug.js', :release => 'lib/webruby-release.js' }
+  CODE_EXCLUSIONS = ['build.rb' ] 
   OUTPUT_DIR = 'bin'
   OUTPUT_FILE = 'index.html'
   DIRECTORY_EXCLUSIONS = [OUTPUT_DIR]
-  SOURCE_PLACEHOLDER = 'puts \'Put your code in .rb files, not here\''  
+  SOURCE_PLACEHOLDER = 'puts \'Put your code in .rb files, not here\''
   
   # Builds and combines all ruby files; generates final output HTML/project
 	def build
+    mode = ARGV[0] || "debug"
+    raise "Can't build in '#{mode}' mode" if WEBRUBY_FILES[mode.to_sym].nil?
+    mode = mode.to_sym
+    puts "Buidling in #{mode} mode ..."
 		ensure_build_files_exist
     ensure_source_placeholder_exists
     code = amalgamate_code_files
-    build_result(code)
+    build_result(code, mode)
 	end
   
   private
@@ -24,6 +29,9 @@ class Builder
   def ensure_build_files_exist
     ensure_file_exists(ENTRY_POINT)
     ensure_file_exists(HTML_TEMPLATE)
+    WEBRUBY_FILES.each do |config, file|
+      ensure_file_exists(file)
+    end
   end
   
   # Check if a file exists and raise if it doesn't.
@@ -56,7 +64,7 @@ class Builder
   
   # Builds the final project output, using the template and amalgamated code.
   # Also copies relevant, dependency directories.
-  def build_result(code)
+  def build_result(code, mode)
     # TODO: incremental build?
     
     puts "Building to #{OUTPUT_DIR} ..."    
@@ -79,6 +87,12 @@ class Builder
       FileUtils.cp_r(d, "#{OUTPUT_DIR}/#{d}")
       puts "Copied #{d} directory"
     end
+    
+    # Keep one of: webruby-debug or webruby-release
+    delete = mode == :debug ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
+    delete = "#{OUTPUT_DIR}/#{delete}"
+    FileUtils.rm_f delete
+    puts "DELETED #{delete}"
     
     puts "Done!"
   end
