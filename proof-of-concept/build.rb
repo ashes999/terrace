@@ -7,17 +7,20 @@ class Builder
   CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] 
   OUTPUT_DIR = 'bin'
   OUTPUT_FILE = 'index.html'
+  CRAFTY_LIB = 'lib/crafty-min.js'
   DIRECTORY_EXCLUSIONS = [OUTPUT_DIR]
   SOURCE_PLACEHOLDER = 'puts \'Put your code in .rb files, not here\''
   WEBRUBY_PLACEHOLDER = 'src="lib/webruby.js"'
+  TARGETS = ['js-crafty']
   
   # Builds and combines all ruby files; generates final output HTML/project
 	def build
-    mode = ARGV[0] || "debug"
+    target = ARGV[0] || TARGETS[0]
+    mode = ARGV[1] || "debug"
     raise "Can't build in '#{mode}' mode" if WEBRUBY_FILES[mode.to_sym].nil?
     mode = mode.to_sym
-    puts "Buidling in #{mode} mode ..."
-		ensure_build_files_exist
+    puts "Buidling #{target} target in #{mode} mode ..."
+		ensure_build_files_exist(target)
     ensure_source_placeholder_exists
     code = amalgamate_code_files
     build_result(code, mode)
@@ -26,11 +29,15 @@ class Builder
   private
   
   # Make sure our build files exist on disk
-  def ensure_build_files_exist
+  def ensure_build_files_exist(target)
     ensure_file_exists(ENTRY_POINT)
-    ensure_file_exists(HTML_TEMPLATE)
-    WEBRUBY_FILES.each do |config, file|
-      ensure_file_exists(file)
+    
+    if target.index('js') == 0
+      ensure_file_exists(HTML_TEMPLATE)
+      ensure_file_exists(CRAFTY_LIB)
+      WEBRUBY_FILES.each do |config, file|
+        ensure_file_exists(file)
+      end
     end
   end
   
