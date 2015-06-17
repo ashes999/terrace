@@ -28,7 +28,7 @@ To play the game, open `bin/index.html` in your browser.
 ## Important Points to Note
 
 - WebRuby uses `console.log` for error handling; please use Chrome to debug (you won't see the console messages in FireFox).
-- The order in which dependencies are aggregated together is *currently undefined.* `main.rb` is always added last.
+- Source files are aggregated together *alphabetically*, starting with `pearl` code. `main.rb` is always added last.
 - For debugging, we automatically include `lib/webruby-debug.js`. This file is 5MB (!), but produces verbose error messages.
 - For release builds, specify `release` (eg. `build.rb release`) to link the `webruby-release.js` file instead.
 - We can't meaningfully report on WebRuby versions. We're probably using `0.9.3`.
