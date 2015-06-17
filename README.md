@@ -1,4 +1,4 @@
-# Game Library
+# Terrace
 
 **Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser.  
 
