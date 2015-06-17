@@ -1,11 +1,11 @@
 class Builder
   require 'fileutils'
-  require './tools/js_crafty_builder'
+  require './tools/web_crafty_js_builder'
   
   ENTRY_POINT = 'main.rb'    
   CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] # ENTRY_POINT is added last
   OUTPUT_DIR = 'bin'
-  TARGETS = { 'js-crafty' => 'JsCraftyBuilder' }
+  TARGETS = { 'web-craftyjs' => 'WebCraftyJsBuilder' }
   
   # Builds and combines all ruby files; generates final output project
 	def build

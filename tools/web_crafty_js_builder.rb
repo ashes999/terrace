@@ -1,11 +1,11 @@
-class JsCraftyBuilder < Builder
+class WebCraftyJsBuilder < Builder
   WEBRUBY_FILES = { :debug => 'lib/webruby-debug.js', :release => 'lib/webruby-release.js' }
   HTML_TEMPLATE = 'template.html'
   OUTPUT_FILE = 'index.html'
   CRAFTY_LIB = 'lib/crafty-min.js'
   SOURCE_PLACEHOLDER = 'puts \'Put your code in .rb files, not here\''
   WEBRUBY_PLACEHOLDER = 'src="lib/webruby.js"'
-  TARGET = 'js-crafty'
+  TARGET = 'web-craftyjs'
   
   def initialize
     mode = ARGV[1] || "debug"

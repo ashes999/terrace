@@ -1,4 +1,4 @@
-# Pearl Game Library
+# Game Library
 
 **Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser.  
 
@@ -28,17 +28,17 @@ To play the game, open `bin/index.html` in your browser.
 ## Important Points to Note
 
 - WebRuby uses `console.log` for error handling; please use Chrome to debug (you won't see the console messages in FireFox).
-- Source files are aggregated together *alphabetically*, starting with `pearl` code. `main.rb` is always added last.
-- For debugging, we automatically include `lib/webruby-debug.js`. This file is 5MB (!), but produces verbose error messages.
+- Source files are aggregated together *alphabetically*, starting with `lib` code. `main.rb` is always added last.
+- For debugging, we automatically include `webruby-debug.js`. This file is 5MB (!), but produces verbose error messages.
 - For release builds, specify `release` (eg. `build.rb release`) to link the `webruby-release.js` file instead.
 - We can't meaningfully report on WebRuby versions. We're probably using `0.9.3`.
 - You can't use backticks in your code. Doing so will break the amalgamation of code (and even if it didn't, Javascript runs in the browser, so it wouldn't work.)
 
-# Supported Targets
+# Supported Platforms and Targets
 
-Currently, we are working on supporting the following target:
+Currently, we are working on supporting the following platforms and targets:
 
-- Web (Javascript)
-- Desktop (Linux)
-- Mobile (Android)
+- **Web:** `web-craftyjs` (Javascript)
+- **Desktop:** `desktop-linux`
+- **Mobile:** `mobile-android`
 
