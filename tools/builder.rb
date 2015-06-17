@@ -38,7 +38,10 @@ class Builder
   def amalgamate_code_files
     print 'Concatenating ruby files '
     final_code = ''
-    files = Dir.glob("pearl/#{@target}/**/*.rb") + Dir.glob('src/**/*.rb') 
+            
+    files = Dir.glob('lib/common/**/*.rb') + # generic code  
+      Dir.glob("lib/#{@target}/**/*.rb") + # target-specific code
+      Dir.glob('src/**/*.rb') 
     
     # TODO: what order do we traverse? These are alphabetical, not even listed
     # by directory/subdirectory first. Should we build a graph of dependencies?

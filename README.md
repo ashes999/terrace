@@ -32,6 +32,7 @@ To play the game, open `bin/index.html` in your browser.
 - For debugging, we automatically include `lib/webruby-debug.js`. This file is 5MB (!), but produces verbose error messages.
 - For release builds, specify `release` (eg. `build.rb release`) to link the `webruby-release.js` file instead.
 - We can't meaningfully report on WebRuby versions. We're probably using `0.9.3`.
+- You can't use backticks in your code. Doing so will break the amalgamation of code (and even if it didn't, Javascript runs in the browser, so it wouldn't work.)
 
 # Supported Targets
 

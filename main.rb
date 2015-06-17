@@ -1,7 +1,7 @@
 # This is your application entry point. Feel free to define
 # whatever you want as far as classes and methods. Just make
 # sure it starts execution of your game.
-# Any source files in `src` will be included first.
+# Any source files in "src" will be included first.
 class Main
   def run    
     Game.new
