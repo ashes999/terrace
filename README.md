@@ -6,19 +6,22 @@ We're currently in the very early stages of development, to try and make this wo
 
 # Getting Started
 
-To start, edit `main.rb` and add code for your game. Make sure it runs the game, like the below example (which consumes CraftyJS directly):
+To start, edit `main.rb` and add code for your game, like so:
 
 ```
 class Main
-  def run
-    $window = MrubyJs::get_root_object
-    $crafty = $window.Crafty
+  def run    
     Game.new
+    # TODO: this is not how we want to add components.
+    e = Entity.new('2D, Canvas, Color, Alpha, Fourway')
+    e.size(32, 32)
+    e.color('red')
+    e.move_to_input
     puts "Done at #{Time.new}"
   end
 end
 
-Main.new.run
+Main.new.run # start game execution
 ```
 
 To run your game, run `ruby build.rb`. This will combine all the ruby files together into a single script, and generate the HTML5 version of the game.
