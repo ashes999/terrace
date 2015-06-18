@@ -5,8 +5,7 @@
 class Main
   def run    
     Game.new(800, 600)
-    # Proposed API: chaining for berevity. This style is cool.
-    e = Entity.new([TwoDComponent.new, KeyboardComponent.new])
+    e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
     e.size(32, 32).color('red').move_with_keyboard
     puts "Done at #{Time.new}"
   end

@@ -2,7 +2,7 @@ class Entity
   $window = MrubyJs::get_root_object
   $crafty = $window.Crafty
   
-  def initialize(components)
+  def initialize(*components)
     @components = components
     
     # Convert names into a string list that CraftyJS wants

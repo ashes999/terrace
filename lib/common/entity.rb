@@ -1,6 +1,6 @@
 class Entity
   
-  def initialize(components)
+  def initialize(*components)    
     @components = components    
   end
   
