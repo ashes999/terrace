@@ -3,21 +3,34 @@ class Entity
   $crafty = $window.Crafty
   
   def initialize(components)
-    @me = $crafty.e(components)
-    return @me
+    @components = components
+    
+    # Convert names into a string list that CraftyJS wants
+    # These are the basic/global ones that always apply.
+    component_names = '2D, Canvas,'
+    
+    @components.each do |c|
+      name = get_craftyjs_name(c.class.to_s) # class.name doesn't exist      
+      component_names = "#{component_names} #{name}, "   
+    end
+    
+    @me = $crafty.e(component_names)
+    
+    @components.each do |c|
+      # In CraftyJS, you make calls directly to the entity, not components
+      c.entity = @me
+    end
   end
   
-  # TODO: un-hard-code and break into component code
+  private
   
-  def size(width, height)
-    @me.attr({ :w => width, :h => height })
-  end
-  
-  def color(string)
-    @me.color(string)
-  end
-  
-  def move_to_input
-    @me.fourway(8)
-  end
+  def get_craftyjs_name(class_name)
+    if class_name == 'TwoDComponent'
+        return 'Color, Alpha'
+    elsif class_name == 'KeyboardComponent'
+      return 'Fourway'
+    else
+      return class_name[0, class_name.rindex('Component')]
+    end      
+  end    
 end

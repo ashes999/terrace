@@ -4,12 +4,10 @@
 # Any source files in "src" will be included first.
 class Main
   def run    
-    Game.new
-    # TODO: this is not how we want to add components.
-    e = Entity.new('2D, Canvas, Color, Alpha, Fourway')
-    e.size(32, 32)
-    e.color('red')
-    e.move_to_input
+    Game.new(800, 600)
+    # Proposed API: chaining for berevity. This style is cool.
+    e = Entity.new([TwoDComponent.new, KeyboardComponent.new])
+    e.size(32, 32).color('red').move_with_keyboard
     puts "Done at #{Time.new}"
   end
 end
