@@ -60,6 +60,11 @@ class Builder
     entry_point = File.read(ENTRY_POINT)
     final_code = "#{final_code}\n#{entry_point}"
     
+    FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
+    File.open("#{OUTPUT_DIR}/#{ENTRY_POINT}", 'w') { |f|
+      f.write(final_code)
+    }
+    
     puts ' done.'
     return final_code
   end
@@ -68,9 +73,6 @@ class Builder
   # Also copies relevant, dependency directories.
   def build_result
     puts "Building to #{OUTPUT_DIR} ..."    
-    FileUtils.rm_rf(OUTPUT_DIR) if Dir.exist?(OUTPUT_DIR)
-    FileUtils.mkdir_p(OUTPUT_DIR)
-    
     @builder.build(@code)
     puts "Done!"
   end
