@@ -41,6 +41,6 @@ To play the game, open `bin/index.html` in your browser.
 Currently, we are working on supporting the following platforms and targets:
 
 - **Web:** `web-craftyjs` (Javascript)
-- **Desktop:** `desktop-linux`
+- **Desktop:** `desktop-gosu`
 - **Mobile:** `mobile-android`
 
