@@ -44,3 +44,9 @@ Currently, we are working on supporting the following platforms and targets:
 To build your application in release mode, add `release` to the end of the command-line, eg. `ruby build.rb web-craftyjs release`. Differences are:
 
 - **Web/CraftyJS:** Debug uses `webruby-debug.js`, which is 5MB (!) but produces verbose error messages. Release builds use the `webruby-release.js` file instead.
+
+# Development Environment Setup
+
+If you plan to contribute to `terrace`, you need the following set up:
+
+- Ruby (1.9.3 or newer)
