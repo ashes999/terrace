@@ -1,11 +1,12 @@
 class Builder
   require 'fileutils'
-  require './tools/web_crafty_js_builder'
+  require './tools/web_craftyjs_builder'
   
   ENTRY_POINT = 'main.rb'    
   CODE_EXCLUSIONS = ['build.rb', ENTRY_POINT ] # ENTRY_POINT is added last
   OUTPUT_DIR = 'bin'
   TARGETS = { 'web-craftyjs' => 'WebCraftyJsBuilder' }
+  TARGETS_FOLDER = 'lib'
   
   # Builds and combines all ruby files; generates final output project
 	def build
@@ -20,7 +21,10 @@ class Builder
     puts "Buidling #{@target} target ..."
     
     builder_class = Object.const_get(TARGETS[@target])
-    @builder = builder_class.new
+    @builder = builder_class.new({
+      :source_folder => "#{TARGETS_FOLDER}/#{@target}",
+      :output_folder => "#{OUTPUT_DIR}/#{@target}"
+    })
     @code = amalgamate_code_files
     build_result
 	end
