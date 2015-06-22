@@ -1,0 +1,6 @@
+[submodule "webruby"]
+	path = webruby
+	url = https://github.com/xxuejie/webruby
+[submodule "3rdparty/webruby"]
+	path = 3rdparty/webruby
+	url = https://github.com/xxuejie/webruby
