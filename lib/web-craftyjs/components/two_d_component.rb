@@ -1,8 +1,13 @@
-class TwoDComponent
-  attr_accessor :entity
+#= require base_component
 
+class TwoDComponent < BaseComponent
   def size(width, height)
     @entity.attr({ :w => width, :h => height })
+    return @entity
+  end
+
+  def move(x, y)
+    @entity.attr({ :x => x, :y => y })
     return @entity
   end
 

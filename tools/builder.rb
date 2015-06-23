@@ -20,16 +20,34 @@ class Builder
   # Location of target-specific source
   TARGETS_FOLDER = 'lib'
 
+  # Path to mrubymix binaries
+  MRUBYMIX = '3rdparty/mrubymix/bin/mrubymix'
+
+  # Look for this line in our entry-point. Swap TARGET with our target.
+  # This causes us to load target-specific code.
+  TERRACE_TARGET_REQUIRE = 'require ./lib/TARGET/terrace.rb'
+
+  # mrubymix requires a "require" statement at the top-level. To solve this,
+  # we use one require for the common code, and a placeholder statement
+  # (see TERRACE_TARGET_REQUIRE). At runtime, we plug in the target name,
+  # thus causing it to require the target-specific files.  This is the name
+  # of the temporary file we feed in, which has the swapped-in target require.
+  GENERATED_MAIN = 'main-generated.rb'
+
   # Builds and combines all ruby files; generates final output project
 	def build
     if ARGV[0].nil?
-      @target = TARGETS.first[0] # key (eg. js-crafty)
+      @target = TARGETS.first[0] # key (eg. web-craftyjs)
     else
       @target = ARGV[0]
       raise "#{ARGV[0]} target is not supported" if @target.nil?
     end
 
     ensure_file_exists(ENTRY_POINT)
+    if !File.read(ENTRY_POINT).include?(TERRACE_TARGET_REQUIRE)
+      raise "#{ENTRY_POINT} is missing a line to require the terrace target: #{TERRACE_TARGET_REQUIRE}"
+    end
+
     puts "Buidling #{@target} target ..."
 
     builder_class = Object.const_get(TARGETS[@target])
@@ -38,7 +56,8 @@ class Builder
       :output_folder => "#{OUTPUT_DIR}/#{@target}",
       :content_folder => CONTENT_FOLDER
     })
-    @code = amalgamate_code_files
+
+    amalgamate_code_files
     build_result
 	end
 
@@ -51,42 +70,34 @@ class Builder
 
   private
 
-  # Combine all Ruby files together.
+  # Combine all Ruby files together. Using mrubymix.
   def amalgamate_code_files
+
     print 'Concatenating ruby files '
-    final_code = ''
 
-    files = Dir.glob('lib/common/**/*.rb') + # generic code
-      Dir.glob("lib/#{@target}/**/*.rb") + # target-specific code
-      Dir.glob('src/**/*.rb')
-
-    # TODO: what order do we traverse? These are alphabetical, not even listed
-    # by directory/subdirectory first. Should we build a graph of dependencies?
-    # TODO: do we need to append the entry point last? Why not just leave it up to the user?
-    files.each do |f|
-      file_code = File.read(f)
-      final_code = "#{final_code}\n#{file_code}"
-      print '.'
-    end
-
-    # Add entry-point code lasts, since it depends on everything else
     entry_point = File.read(ENTRY_POINT)
-    final_code = "#{final_code}\n#{entry_point}"
+    # Put a "require" statement with our target in it
+    modified_entry_point = entry_point.sub(TERRACE_TARGET_REQUIRE, TERRACE_TARGET_REQUIRE.sub('/TARGET/', "/#{@target}/"))
 
-    FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
-    File.open("#{OUTPUT_DIR}/#{ENTRY_POINT}", 'w') { |f|
-      f.write(final_code)
+    # Swap in the "require" line with the correct target
+    File.open(GENERATED_MAIN, 'w') { |f|
+      f.write(modified_entry_point)
     }
 
+    FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
+    `#{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
+    FileUtils.rm GENERATED_MAIN
+
     puts ' done.'
-    return final_code
   end
 
   # Builds the final project output, using the template and amalgamated code.
   # Also copies relevant, dependency directories.
   def build_result
     puts "Building to #{OUTPUT_DIR} ..."
-    @builder.build(@code)
+    code = File.read "#{OUTPUT_DIR}/#{ENTRY_POINT}"
+    @builder.build(code)
+    FileUtils.rm "#{OUTPUT_DIR}/#{ENTRY_POINT}"
     puts "Done!"
   end
 end

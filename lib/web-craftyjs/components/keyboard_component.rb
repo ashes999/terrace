@@ -1,6 +1,6 @@
-class KeyboardComponent
-  attr_accessor :entity
+#= require base_component
 
+class KeyboardComponent < BaseComponent
   def move_with_keyboard
     @entity.fourway(8)
     return @entity

@@ -1,6 +1,6 @@
-class ImageComponent
-  attr_accessor :entity
+#= require base_component
 
+class ImageComponent < BaseComponent
   def image(string)
     @entity.image(string)
     return @entity
