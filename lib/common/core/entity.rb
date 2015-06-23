@@ -1,19 +1,21 @@
 class Entity
-  
-  def initialize(*components)    
-    @components = components    
+
+  def initialize(*components)
+    @components = components
   end
-  
+
   # Any missing methods? Check our components first.
   # If they don't handle it, we throw.
-  def method_missing(m, *args, &block)  
+  def method_missing(m, *args, &block)
     @components.each do |c|
       if c.respond_to?(m)
-        c.send(m, *args, &block)
-        return self # so we can chain calls
+        to_return = c.send(m, *args, &block)
+        # Return the returned value, if there is one. If there isn't, return
+        # ourselves, so we can chain calls.
+        return to_return || self
       end
     end
-    
+
     raise "No method named '#{m}' was found on this entity or any of its components: #{@components.collect { |o| o.class.to_s } }"
   end
 end
