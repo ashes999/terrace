@@ -9,18 +9,15 @@ We're currently in the very early stages of development, to try and make this wo
 To start, edit `main.rb` and add code for your game, like so:
 
 ```
-class Main
-  def run
-    g = Game.new(800, 600)
-    g.load_images(['content/images/fox.png'], Proc.new {
-      e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
-      e.size(32, 32).color('red').move_with_keyboard
-      puts "Done at #{Time.new}"
-    })
-  end
-end
-
-Main.new.run # start game execution
+# Load the terrace library, and target-specific code. Do not remove these!
+#= require ./lib/common/terrace_common.rb
+#= require ./lib/TARGET/terrace.rb
+g = Game.new(800, 600)
+g.load_images(['content/images/fox.png'], Proc.new {
+  e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
+  e.size(32, 32).color('red').move_with_keyboard
+  puts "Done at #{Time.new}"
+})
 ```
 
 This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys.
