@@ -3,11 +3,12 @@
 # sure it starts execution of your game.
 # Any source files in "src" will be included first.
 class Main
-  def run    
-    Game.new(800, 600)
-    e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
-    e.size(32, 32).color('red').move_with_keyboard
-    puts "Done at #{Time.new}"
+  def run
+    g = Game.new(800, 600)
+    g.load_images(['content/images/fox.png'], Proc.new {
+      e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
+      e.size(32, 32).color('red').move_with_keyboard
+    })
   end
 end
 

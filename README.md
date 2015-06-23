@@ -11,17 +11,19 @@ To start, edit `main.rb` and add code for your game, like so:
 ```
 class Main
   def run
-    Game.new(800, 600)
-    e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
-    e.size(32, 32).color('red').move_with_keyboard
-    puts "Done at #{Time.new}"
+    g = Game.new(800, 600)
+    g.load_images(['content/images/fox.png'], Proc.new {
+      e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
+      e.size(32, 32).color('red').move_with_keyboard
+      puts "Done at #{Time.new}"
+    })
   end
 end
 
 Main.new.run # start game execution
 ```
 
-This sample creates a new `800x600` game with a `32x32` red box that moves with the arrow keys.
+This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys.
 
 To run your game, run `ruby build.rb`. This will generate all the files for the default target (currently `web-craftyjs`) under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
