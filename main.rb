@@ -5,9 +5,9 @@
 class Main
   def run
     g = Game.new(800, 600)
-    g.load_images(['content/images/fox.png'], Proc.new {
-      e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
-      e.size(32, 32).color('red').move_with_keyboard
+    g.load_images(['content/images/fox.png'], lambda {
+      e = Entity.new(ImageComponent.new, KeyboardComponent.new)
+      e.image('content/images/fox.png').move_with_keyboard
     })
   end
 end

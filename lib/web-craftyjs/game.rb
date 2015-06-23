@@ -11,7 +11,7 @@ class Game
 
   # Loads images. When done, it invokes the callback.
   def load_images(images, callback)
-    $crafty.load({ :images => images }, Proc.new {
+    $crafty.load({ :images => images }, lambda {
       callback.call
     })
   end
