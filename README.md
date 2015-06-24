@@ -25,10 +25,20 @@ This sample creates a new `800x600` game with a fox sprite that moves with the a
 
 To run your game, run `ruby build.rb`. This will generate all the files for the default target (currently `web-craftyjs`) under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
+# Main Components
+
+A summary of the main components and their methods:
+
+- **TwoDComponent:** Anything in 2D space. Has `move(x, y)`, `x`, `y`
+- **ImageComponent:** An image! Has `image(filename)`
+- **KeyboardComponent:** Responds to keyboard input. Has `move_with_keyboard()`.
+- **TouchComponent:** Receives touches. Has `touch(callback)`
+- **AudioComponent:** Can play a sound. Has `play(filename, { :loop => true/false })`
+
+
 ## Important Points to Note
 
 - WebRuby uses `console.log` for error handling; please use Chrome to debug (you won't see the console messages in FireFox).
-- Source files are aggregated together *alphabetically*, starting with `lib` code. `main.rb` is always added last. This will change when we adopt `mrubymix`.
 - You can't use backticks in your code. Doing so will break the amalgamation of code (and even if it didn't, Javascript runs in the browser, so it wouldn't work.)
 
 # Supported Platforms and Targets

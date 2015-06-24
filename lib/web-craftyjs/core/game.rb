@@ -9,9 +9,10 @@ class Game
     $crafty.background('black')
   end
 
-  # Loads images. When done, it invokes the callback.
-  def load_images(images, callback)
-    $crafty.load({ :images => images }, lambda {
+  # Loads images and audio. Files is a hash. When done, it invokes the callback.
+  # eg. files = { :images => [ ... ], :audio => [ ... ] }
+  def load(files, callback)
+    $crafty.load(files, lambda {
       callback.call
     })
   end

@@ -6,9 +6,15 @@
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
 g = Game.new(800, 600)
-#g.load_images(['content/images/fox.png', 'content/images/emblem.png'], lambda {
-  e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new)
+g.load({
+  :images => ['content/images/fox.png', 'content/images/emblem.png'],
+  :audio => ['content/audio/noise.wav']
+}, lambda {
+  e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
   e.image('content/images/fox.png')
   e.move_with_keyboard
-  e.touch(lambda { e.move(e.x + 100, e.y + 100)  })
-#})
+  e.touch(lambda {
+    e.move(e.x + 100, e.y + 100)
+    e.play('content/audio/noise.ogg')
+  })
+})
