@@ -3,17 +3,22 @@
 class TwoDComponent < BaseComponent
   def size(width, height)
     @entity.attr({ :w => width, :h => height })
-    return @entity
   end
 
   def move(x, y)
     @entity.attr({ :x => x, :y => y })
-    return @entity
   end
 
   def color(color)
     @entity.color(color)
-    return @entity
+  end
+
+  def x
+    return @entity.x
+  end
+
+  def y
+    return @entity.y
   end
 
   def crafty_name

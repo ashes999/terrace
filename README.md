@@ -13,14 +13,15 @@ To start, edit `main.rb` and add code for your game, like so:
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
 g = Game.new(800, 600)
-g.load_images(['content/images/fox.png'], Proc.new {
+g.load_images(['content/images/fox.png'], lambda {
   e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
-  e.size(32, 32).color('red').move_with_keyboard
-  puts "Done at #{Time.new}"
+  e.image('content/images/fox.png')
+  e.move_with_keyboard
+  e.touch(lambda { puts "The time is #{Time.new}" })
 })
 ```
 
-This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys.
+This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys. Clicking it with the mouse displays the current time.
 
 To run your game, run `ruby build.rb`. This will generate all the files for the default target (currently `web-craftyjs`) under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 

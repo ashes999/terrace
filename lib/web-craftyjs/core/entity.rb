@@ -14,7 +14,7 @@ class Entity
     end
 
     @me = $crafty.e(component_names)
-    
+
     @components.each do |c|
       # In CraftyJS, you make calls directly to the entity, not components
       # Set this, so each component can make calls to the entity.

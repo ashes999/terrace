@@ -10,9 +10,7 @@ class Entity
     @components.each do |c|
       if c.respond_to?(m)
         to_return = c.send(m, *args, &block)
-        # Return the returned value, if there is one. If there isn't, return
-        # ourselves, so we can chain calls.
-        return to_return || self
+        return to_return
       end
     end
 
