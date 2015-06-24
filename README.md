@@ -34,7 +34,7 @@ A summary of the main components and their methods:
 - **KeyboardComponent:** Responds to keyboard input. Has `move_with_keyboard()`.
 - **TouchComponent:** Receives touches. Has `touch(callback)`
 - **AudioComponent:** Can play a sound. Has `play(filename, { :loop => true/false })`
-
+- **textComponent:** Displays text. Can `move`, and set `text(display_text)`.
 
 ## Important Points to Note
 
