@@ -1,5 +1,5 @@
 #= require base_component
-
+# Plays an audio file, with options (like looping).
 class AudioComponent < BaseComponent
 
   $window = MrubyJs::get_root_object
