@@ -5,25 +5,70 @@
 # Load the terrace library, and target-specific code. Do not remove these!
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
-g = Game.new(800, 600)
-g.load({
-  :images => ['content/images/fox.png', 'content/images/emblem.png'],
-  :audio => ['content/audio/noise.ogg']
-}, lambda {
 
-  touches = 0
-  t = Entity.new(TextComponent.new)
-  t.text('Touches: 0')
-  t.move(8, 8)
+require 'rubygems'
+require 'gosu'
+require './lib/common/core/entity'
 
-  e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
-  e.image('content/images/fox.png')
-  e.move_with_keyboard
+class GameWindow < Gosu::Window
 
-  e.touch(lambda {
-    e.move(e.x + 100, e.y + 100)
-    e.play('content/audio/noise.ogg')
-    touches += 1
-    t.text("Touches: #{touches}")
-  })
-})
+  def initialize
+    super(800, 600,false)
+    self.caption = "Desktop Target"
+    @e = Entity.new(ImageComponent.new(self))
+    @e.image('content/images/fox.png')
+  end
+
+  def draw
+    ImageComponent::all.each do |i|
+      i.draw
+    end
+  end
+
+  def button_down(id)
+    case id
+      when Gosu::KbEscape
+        close  # exit on press of escape key
+      when Gosu::KbRight
+        @e.move(@e.x + 50, @e.y)
+    end
+  end
+end
+
+class TwoDComponent
+  attr_accessor :x, :y
+
+  # def size(width, height)
+  # def color(color)
+
+  def move(x, y)
+    @x = x
+    @y = y
+  end
+end
+
+class ImageComponent < TwoDComponent
+
+  @@all_images = []
+
+  def self.all
+    return @@all_images
+  end
+
+  def initialize(window)
+    @window = window
+    @x = @y = @z = 0
+  end
+
+  def image(string)
+    @image = Gosu::Image.new(@window, string, false)
+    @@all_images << self
+  end
+
+  def draw
+    @image.draw(@x, @y, @z)
+  end
+end
+
+window = GameWindow.new
+window.show

@@ -34,7 +34,7 @@ A summary of the main components and their methods:
 - **KeyboardComponent:** Responds to keyboard input. Has `move_with_keyboard()`.
 - **TouchComponent:** Receives touches. Has `touch(callback)`
 - **AudioComponent:** Can play a sound. Has `play(filename, { :loop => true/false })`
-- **textComponent:** Displays text. Can `move`, and set `text(display_text)`.
+- **TextComponent:** Displays text. Can `move`, and set `text(display_text)`.
 
 ## Important Points to Note
 
@@ -60,3 +60,4 @@ To build your application in release mode, add `release` to the end of the comma
 If you plan to contribute to `terrace`, you need the following set up:
 
 - Ruby (1.9.3 or newer)
+- `gosu` gem (0.9.2) for the `desktop` target. Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
