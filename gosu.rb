@@ -15,9 +15,15 @@ class GameWindow < Gosu::Window
   def initialize
     super(800, 600,false)
     self.caption = "Desktop Target"
-    e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new)
+    e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new, TouchComponent.new)
     e.image('content/images/fox.png')
     e.move_with_keyboard
+    e.touch(lambda { puts "TOUCHY!!" })
+  end
+
+  # Always show the mouse
+  def needs_cursor?
+    return true
   end
 
   def update
@@ -33,6 +39,10 @@ class GameWindow < Gosu::Window
   end
 
   def button_down(id)
+    TouchComponent::all.each do |t|
+      t.button_down(id)
+    end
+
     case id
       when Gosu::KbEscape
         close  # exit on press of escape key
@@ -62,6 +72,8 @@ end
 
 class ImageComponent < BaseComponent
 
+  ##### TODO: refactor into module? so it can be DRY.
+  # Also, don't add if we're already in there.
   @@all = []
 
   def self.all
@@ -119,6 +131,24 @@ class KeyboardComponent < BaseComponent
 
   def is_down?(key)
     return Gosu::button_down?(key)
+  end
+end
+
+class TouchComponent < BaseComponent
+  @@all = []
+
+  def self.all
+    return @@all
+  end
+
+  def touch(callback)
+    @callback = callback
+    @@all << self
+  end
+
+  # internal
+  def button_down(id)
+    @callback.call if id == Gosu::MsLeft
   end
 end
 
