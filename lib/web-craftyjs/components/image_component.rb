@@ -1,5 +1,3 @@
-#= require base_component
-
 class ImageComponent < BaseComponent
   def image(string)
     @entity.image(string)

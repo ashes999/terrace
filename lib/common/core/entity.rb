@@ -1,5 +1,4 @@
 class Entity
-
   def initialize(*components)
     @components = components
 
@@ -7,7 +6,6 @@ class Entity
       c.entity = self
     end
   end
-
   # Any missing methods? Check our components first.
   # If they don't handle it, we throw.
   def method_missing(m, *args, &block)

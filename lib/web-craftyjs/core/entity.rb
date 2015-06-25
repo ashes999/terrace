@@ -3,8 +3,8 @@ class Entity
   $crafty = $window.Crafty
 
   def initialize(*components)
-    ##### set @components and on each, set @entity?
-    
+    @components = components
+
     # Convert names into a string list that CraftyJS wants
     # These are the basic/global ones that always apply.
     component_names = '2D, Canvas,'
@@ -14,5 +14,11 @@ class Entity
     end
 
     @me = $crafty.e(component_names)
+
+    @components.each do |c|
+      # In CraftyJS, you make calls directly to the entity, not components
+      # Set this, so each component can make calls to the entity.
+      c.entity = @me
+    end
   end
 end

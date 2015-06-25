@@ -1,4 +1,3 @@
-#= require base_component
 # Plays an audio file, with options (like looping).
 class AudioComponent < BaseComponent
 

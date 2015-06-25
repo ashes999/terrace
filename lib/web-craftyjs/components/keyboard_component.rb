@@ -1,5 +1,3 @@
-#= require base_component
-
 class KeyboardComponent < BaseComponent
   def move_with_keyboard
     @entity.fourway(8)

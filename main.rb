@@ -21,7 +21,6 @@ g.load({
   e.move_with_keyboard
 
   e.touch(lambda {
-    e.move(e.x + 100, e.y + 100)
     e.play('content/audio/noise.ogg')
     touches += 1
     t.text("Touches: #{touches}")

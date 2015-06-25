@@ -1,5 +1,3 @@
-#= require base_component
-
 # Displays text. TODO: font customization
 class TextComponent < BaseComponent
 

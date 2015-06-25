@@ -1,5 +1,3 @@
-#= require base_component
-
 class TwoDComponent < BaseComponent
   def size(width, height)
     @entity.attr({ :w => width, :h => height })
