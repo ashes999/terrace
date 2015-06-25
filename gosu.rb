@@ -21,7 +21,9 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    # called every update tick
+    KeyboardComponent::all.each do |k|
+      k.update
+    end
   end
 
   def draw
@@ -31,10 +33,6 @@ class GameWindow < Gosu::Window
   end
 
   def button_down(id)
-    KeyboardComponent.all.each do |k|
-      k.on_key(id)
-    end
-
     case id
       when Gosu::KbEscape
         close  # exit on press of escape key
@@ -85,6 +83,9 @@ class ImageComponent < BaseComponent
 end
 
 class KeyboardComponent < BaseComponent
+
+  SPEED = 8 # TODO: parameterize
+
   @@all = []
 
   def self.all
@@ -96,18 +97,28 @@ class KeyboardComponent < BaseComponent
   end
 
   # internal
-
-  def on_key(key)
-    case key
-      when Gosu::KbRight
-        @entity.x += 8
-      when Gosu::KbDown
-        @entity.y += 8
-      when Gosu::KbLeft
-        @entity.x -= 8
-      when Gosu::KbUp
-        @entity.y -= 8
+  def update
+    if is_down?(Gosu::KbRight) || is_down?(Gosu::KbD)
+      @entity.x += SPEED
     end
+
+    if is_down?(Gosu::KbDown) || is_down?(Gosu::KbS)
+      @entity.y += SPEED
+    end
+
+    if is_down?(Gosu::KbLeft) || is_down?(Gosu::KbA)
+      @entity.x -= SPEED
+    end
+
+    if is_down?(Gosu::KbUp) || is_down?(Gosu::KbW)
+        @entity.y -= SPEED
+    end
+  end
+
+  private
+
+  def is_down?(key)
+    return Gosu::button_down?(key)
   end
 end
 
