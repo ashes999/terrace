@@ -17,13 +17,17 @@ class GameWindow < Gosu::Window
 
     super(800, 600,false)
     self.caption = "Desktop Target"
+
+    t = Entity.new(TwoDComponent.new, TextComponent.new(self))
+    t.text("Clicks: 0")
+
     e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new(self))
     e.image('content/images/fox.png')
     e.move_with_keyboard
     e.touch(lambda {
-      puts "TOUCHY!!"
       clicks += 1
       e.play('content/audio/noise.ogg')
+      t.text("Clicks: #{clicks}")
     })
   end
 
@@ -41,6 +45,10 @@ class GameWindow < Gosu::Window
   def draw
     ImageComponent::all.each do |i|
       i.draw
+    end
+
+    TextComponent::all.each do |t|
+      t.draw
     end
   end
 
@@ -173,6 +181,29 @@ class AudioComponent < BaseComponent
     @@all << self
     @sound = Gosu::Sample.new(@window, filename)
     @sound.play(1.0, 1.0) # frequency, volume
+  end
+end
+
+class TextComponent < BaseComponent
+
+  @@all = []
+
+  def self.all
+    return @@all
+  end
+
+  def initialize(window)
+    @font = Gosu::Font.new(window, Gosu::default_font_name, 24)
+  end
+
+  def text(display_text)
+    @display_text = display_text
+    @@all << self
+  end
+
+  def draw
+    # white
+    @font.draw(@display_text, @entity.x, @entity.y, @entity.z, 1.0, 1.0, 0xFFFFFFFF)
   end
 end
 
