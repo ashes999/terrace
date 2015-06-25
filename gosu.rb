@@ -13,12 +13,18 @@ require './lib/common/core/entity'
 class GameWindow < Gosu::Window
 
   def initialize
+    clicks = 0
+
     super(800, 600,false)
     self.caption = "Desktop Target"
-    e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new, TouchComponent.new)
+    e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new(self))
     e.image('content/images/fox.png')
     e.move_with_keyboard
-    e.touch(lambda { puts "TOUCHY!!" })
+    e.touch(lambda {
+      puts "TOUCHY!!"
+      clicks += 1
+      e.play('content/audio/noise.ogg')
+    })
   end
 
   # Always show the mouse
@@ -149,6 +155,24 @@ class TouchComponent < BaseComponent
   # internal
   def button_down(id)
     @callback.call if id == Gosu::MsLeft
+  end
+end
+
+class AudioComponent < BaseComponent
+  @@all = []
+
+  def self.all
+    return @@all
+  end
+
+  def initialize(window)
+    @window = window
+  end
+
+  def play(filename, options = {})
+    @@all << self
+    @sound = Gosu::Sample.new(@window, filename)
+    @sound.play(1.0, 1.0) # frequency, volume
   end
 end
 
