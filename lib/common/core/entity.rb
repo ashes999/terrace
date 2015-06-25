@@ -2,6 +2,10 @@ class Entity
 
   def initialize(*components)
     @components = components
+
+    @components.each do |c|
+      c.entity = self
+    end
   end
 
   # Any missing methods? Check our components first.

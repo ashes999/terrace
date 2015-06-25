@@ -1,3 +1,5 @@
+### TODO: move into common lib
+
 # A common base-class component. Used internally only (for DRY).
 class BaseComponent
   attr_accessor :entity
@@ -7,7 +9,7 @@ class BaseComponent
   end
 
   private
-  
+
   # Please don't use this class directly.
   def initialize
   end

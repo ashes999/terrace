@@ -15,8 +15,13 @@ class GameWindow < Gosu::Window
   def initialize
     super(800, 600,false)
     self.caption = "Desktop Target"
-    @e = Entity.new(ImageComponent.new(self))
-    @e.image('content/images/fox.png')
+    e = Entity.new(ImageComponent.new(self), KeyboardComponent.new, TwoDComponent.new)
+    e.image('content/images/fox.png')
+    e.move_with_keyboard
+  end
+
+  def update
+    # called every update tick
   end
 
   def draw
@@ -26,17 +31,27 @@ class GameWindow < Gosu::Window
   end
 
   def button_down(id)
+    KeyboardComponent.all.each do |k|
+      k.on_key(id)
+    end
+
     case id
       when Gosu::KbEscape
         close  # exit on press of escape key
-      when Gosu::KbRight
-        @e.move(@e.x + 50, @e.y)
     end
   end
 end
 
-class TwoDComponent
-  attr_accessor :x, :y
+class BaseComponent
+  attr_accessor :entity
+end
+
+class TwoDComponent < BaseComponent
+  attr_accessor :x, :y, :z
+
+  def initialize
+    @x = @y = @z = 0
+  end
 
   # def size(width, height)
   # def color(color)
@@ -47,26 +62,52 @@ class TwoDComponent
   end
 end
 
-class ImageComponent < TwoDComponent
+class ImageComponent < BaseComponent
 
-  @@all_images = []
+  @@all = []
 
   def self.all
-    return @@all_images
+    return @@all
   end
 
   def initialize(window)
     @window = window
-    @x = @y = @z = 0
   end
 
   def image(string)
     @image = Gosu::Image.new(@window, string, false)
-    @@all_images << self
+    @@all << self
   end
 
   def draw
-    @image.draw(@x, @y, @z)
+    @image.draw(@entity.x, @entity.y, @entity.z) # TODO: use Z (currently 0)
+  end
+end
+
+class KeyboardComponent < BaseComponent
+  @@all = []
+
+  def self.all
+    return @@all
+  end
+
+  def move_with_keyboard
+    @@all << self
+  end
+
+  # internal
+
+  def on_key(key)
+    case key
+      when Gosu::KbRight
+        @entity.x += 8
+      when Gosu::KbDown
+        @entity.y += 8
+      when Gosu::KbLeft
+        @entity.x -= 8
+      when Gosu::KbUp
+        @entity.y -= 8
+    end
   end
 end
 
