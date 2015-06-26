@@ -8,14 +8,18 @@
 
 require 'rubygems'
 require 'gosu'
+
+# require 'a/b' => #= require a/b
+
 require './lib/common/core/entity'
 
 class GameWindow < Gosu::Window
 
+
   def initialize
     clicks = 0
 
-    super(800, 600,false)
+    super(800, 600, false)
     self.caption = "Desktop Target"
 
     t = Entity.new(TwoDComponent.new, TextComponent.new(self))

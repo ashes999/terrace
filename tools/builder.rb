@@ -86,7 +86,7 @@ class Builder
 
     FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
     `#{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
-    FileUtils.rm GENERATED_MAIN
+    FileUtils.mv(GENERATED_MAIN, "#{OUTPUT_DIR}/#{GENERATED_MAIN}")
 
     puts ' done.'
   end
