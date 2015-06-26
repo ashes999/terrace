@@ -26,7 +26,7 @@ class GameWindow < Gosu::Window
     e.move_with_keyboard
     e.touch(lambda {
       clicks += 1
-      e.play('content/audio/noise.ogg')
+      e.play('content/audio/noise.ogg', { :loop => true })
       t.text("Clicks: #{clicks}")
     })
   end
@@ -180,7 +180,7 @@ class AudioComponent < BaseComponent
   def play(filename, options = {})
     @@all << self
     @sound = Gosu::Sample.new(@window, filename)
-    @sound.play(1.0, 1.0) # frequency, volume
+    @sound.play(1.0, 1.0, options[:loop] || false) # frequency, volume
   end
 end
 
