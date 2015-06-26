@@ -13,7 +13,9 @@ To start, edit `main.rb` and add code for your game, like so:
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
 g = Game.new(800, 600)
-g.load_images(['content/images/fox.png'], lambda {
+g.load_content({
+  :images => ['content/images/fox.png', 'content/images/emblem.png']
+}, lambda {
   e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
   e.image('content/images/fox.png')
   e.move_with_keyboard
@@ -23,7 +25,9 @@ g.load_images(['content/images/fox.png'], lambda {
 
 This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys. Clicking it with the mouse displays the current time.
 
-To run your game, run `ruby build.rb`. This will generate all the files for the default target (currently `web-craftyjs`) under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
+To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
+
+To run your game on your desktop, run `ruby build.rb desktop-gosu`. This will generate a `main.rb` file under `bin/dekstop-gosu`. Run it in Ruby to launch your game.
 
 # Main Components
 
@@ -47,7 +51,7 @@ Currently, we are working on supporting the following platforms and targets:
 
 - **Web:** `web-craftyjs` (Javascript)
 - **Desktop:** `desktop-gosu`
-- **Mobile:** `mobile-android`
+- **Mobile:** `mobile-android` (coming soon)
 
 # Debug vs. Release Mode
 
