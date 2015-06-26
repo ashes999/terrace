@@ -1,6 +1,7 @@
 class Builder
   require 'fileutils'
   require './tools/web_craftyjs_builder'
+  require './tools/desktop_gosu_builder'
 
   # Folder to copy. Contains all the content (images, audio, etc.)
   CONTENT_FOLDER = 'content'
@@ -15,7 +16,10 @@ class Builder
   OUTPUT_DIR = 'bin'
 
   # Supported targets
-  TARGETS = { 'web-craftyjs' => 'WebCraftyJsBuilder' }
+  TARGETS = {
+    'web-craftyjs' => 'WebCraftyJsBuilder',
+    'desktop-gosu' => 'DesktopGosuBuilder'
+  }
 
   # Location of target-specific source
   TARGETS_FOLDER = 'lib'
@@ -37,24 +41,28 @@ class Builder
   # Builds and combines all ruby files; generates final output project
 	def build
     if ARGV[0].nil?
-      @target = TARGETS.first[0] # key (eg. web-craftyjs)
+      puts "Please specify a target to build. Valid targets are: #{TARGETS.keys}"
+      return
     else
       @target = ARGV[0]
-      raise "#{ARGV[0]} target is not supported" if @target.nil?
+      raise "#{ARGV[0]} is not a valid target. Valid targets are: #{TARGETS.keys}" if !TARGETS.has_key?(@target)
     end
+
+    mode = ARGV[1] == 'release' ? 'release' : 'debug'
 
     ensure_file_exists(ENTRY_POINT)
     if !File.read(ENTRY_POINT).include?(TERRACE_TARGET_REQUIRE)
       raise "#{ENTRY_POINT} is missing a line to require the terrace target: #{TERRACE_TARGET_REQUIRE}"
     end
 
-    puts "Buidling #{@target} target ..."
+    puts "Building #{@target} target in #{mode} mode ..."
 
     builder_class = Object.const_get(TARGETS[@target])
     @builder = builder_class.new({
       :source_folder => "#{TARGETS_FOLDER}/#{@target}",
       :output_folder => "#{OUTPUT_DIR}/#{@target}",
-      :content_folder => CONTENT_FOLDER
+      :content_folder => CONTENT_FOLDER,
+      :mode => mode
     })
 
     amalgamate_code_files

@@ -15,7 +15,6 @@ require './lib/common/core/entity'
 
 class GameWindow < Gosu::Window
 
-
   def initialize
     clicks = 0
 

@@ -11,17 +11,15 @@ class WebCraftyJsBuilder < Builder
     @source_folder = args[:source_folder]
     @output_folder = args[:output_folder]
     @content_folder = args[:content_folder]
+    @mode = args[:mode]
 
-    mode = ARGV[1] || "debug"
-    raise "Can't build in '#{mode}' mode" if WEBRUBY_FILES[mode.to_sym].nil?
-    puts "Building in #{mode} mode"
-    @mode = mode.to_sym
+    raise "Can't build in '#{@mode}' mode" if WEBRUBY_FILES[@mode.to_sym].nil?
 		ensure_build_files_exist
     ensure_source_placeholder_exists
   end
 
   def build(code)
-  # Substitute code into the template
+    # Substitute code into the template
     template_with_code = File.read("#{@source_folder}/#{HTML_TEMPLATE}").sub(SOURCE_PLACEHOLDER, code)
 
     # Specify debug/release version of webruby
@@ -41,7 +39,7 @@ class WebCraftyJsBuilder < Builder
     FileUtils.cp_r("#{@source_folder}/lib", "#{@output_folder}/lib")
 
     # Keep one of: webruby-debug or webruby-release
-    delete = @mode == :debug ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
+    delete = @mode == 'debug' ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
     delete = "#{@output_folder}/#{delete}"
     FileUtils.rm_f delete
   end
