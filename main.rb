@@ -6,13 +6,13 @@
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
 g = Game.new(800, 600)
-g.load({
+g.load_content({
   :images => ['content/images/fox.png', 'content/images/emblem.png'],
   :audio => ['content/audio/noise.ogg']
 }, lambda {
 
   touches = 0
-  t = Entity.new(TextComponent.new)
+  t = Entity.new(TextComponent.new, TwoDComponent.new)
   t.text('Touches: 0')
   t.move(8, 8)
 

@@ -11,7 +11,7 @@ class Game
 
   # Loads images and audio. Files is a hash. When done, it invokes the callback.
   # eg. files = { :images => [ ... ], :audio => [ ... ] }
-  def load(files, callback)
+  def load_content(files, callback)
     $crafty.load(files, lambda {
       callback.call
     })
