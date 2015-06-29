@@ -93,6 +93,8 @@ class Builder
     }
 
     FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
+    FileUtils.mkdir_p "#{OUTPUT_DIR}"
+    
     `#{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
     FileUtils.mv(GENERATED_MAIN, "#{OUTPUT_DIR}/#{GENERATED_MAIN}")
 

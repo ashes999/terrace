@@ -13,7 +13,8 @@ class TouchComponent < BaseComponent
     @callback = callback
   end
 
-  # internal
+  ### internal
+
   def button_down(id)
     @callback.call if id == Gosu::MsLeft
   end

@@ -17,7 +17,8 @@ class KeyboardComponent < BaseComponent
     @move_with_arrows = true
   end
 
-  # internal
+  ### internal
+  
   def update
     return unless @move_with_arrows
 
