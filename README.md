@@ -55,7 +55,7 @@ Currently, we are working on supporting the following platforms and targets:
 
 # Debug vs. Release Mode
 
-To build your application in release mode, add `release` to the end of the command-line, eg. `ruby build.rb web-craftyjs release`. Differences are:
+To build your application in release mode, add `release` to the end of the command-line, eg. `ruby build.rb web-craftyjs release`. What this does changes by platform:
 
 - **Web/CraftyJS:** Debug uses `webruby-debug.js`, which is 5MB (!) but produces verbose error messages. Release builds use the `webruby-release.js` file instead.
 - **Desktop/Gosu:** Release mode builds compiled binaries. On Windows, you get a `game.exe` file to `bin\desktop-gosu`. You can ship this, along with the `content` directory together, as your final, self-executable game.
@@ -65,5 +65,7 @@ To build your application in release mode, add `release` to the end of the comma
 If you plan to contribute to `terrace`, you need to set up Ruby (1.9.3 or newer)
 
 For the desktop target, you also need:
+
+## For Windows binaries ##
 - The `gosu` gem (0.9.2). Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
 - The `ocra` gem (1.9.5) for building Windows binaries.

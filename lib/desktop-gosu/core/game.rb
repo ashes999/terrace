@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'gosu'
 
 class Game < Gosu::Window
