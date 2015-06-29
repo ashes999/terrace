@@ -62,7 +62,7 @@ class Builder
       :source_folder => "#{TARGETS_FOLDER}/#{@target}",
       :output_folder => "#{OUTPUT_DIR}/#{@target}",
       :content_folder => CONTENT_FOLDER,
-      :mode => mode
+      :mode => mode,
     })
 
     amalgamate_code_files
@@ -94,8 +94,8 @@ class Builder
 
     FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
     FileUtils.mkdir_p "#{OUTPUT_DIR}"
-    
-    `#{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
+
+    `ruby #{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
     FileUtils.mv(GENERATED_MAIN, "#{OUTPUT_DIR}/#{GENERATED_MAIN}")
 
     puts ' done.'
@@ -104,7 +104,7 @@ class Builder
   # Builds the final project output, using the template and amalgamated code.
   # Also copies relevant, dependency directories.
   def build_result
-    puts "Building to #{OUTPUT_DIR} ..."
+    puts "Building combined .rb file to #{OUTPUT_DIR} ..."
     code = File.read "#{OUTPUT_DIR}/#{ENTRY_POINT}"
     @builder.build(code)
     FileUtils.rm "#{OUTPUT_DIR}/#{ENTRY_POINT}"
