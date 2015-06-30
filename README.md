@@ -34,7 +34,7 @@ To run your game on your desktop, run `ruby build.rb desktop-gosu`. This will ge
 A summary of the main components and their methods:
 
 - **TwoDComponent:** Anything in 2D space. Has `move(x, y)`, `x`, `y`
-- **ImageComponent:** An image! Has `image(filename)`
+- **ImageComponent:** An image! Has `image(filename)`; you can get the `width` and `height`.
 - **KeyboardComponent:** Responds to keyboard input. Has `move_with_keyboard()`.
 - **TouchComponent:** Receives touches. Has `touch(callback)`
 - **AudioComponent:** Can play a sound. Has `play(filename, { :loop => true/false })`

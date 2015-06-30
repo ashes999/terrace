@@ -17,4 +17,12 @@ class ImageComponent < BaseComponent
   def draw
     @image.draw(@entity.x, @entity.y, @entity.z) # TODO: use Z (currently 0)
   end
+
+  def width
+    return @image.width
+  end
+
+  def height
+    return @image.height
+  end
 end

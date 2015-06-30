@@ -19,6 +19,7 @@ g.load_content({
   e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
   e.image('content/images/fox.png')
   e.move_with_keyboard
+  puts "Size of e is #{e.width}x#{e.height}"
 
   e.touch(lambda {
     e.play('content/audio/noise.ogg')
