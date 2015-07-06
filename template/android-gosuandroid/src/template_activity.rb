@@ -7,33 +7,34 @@ module ZOrder
 end
 
 class Player
-  attr_reader :score
+  attr_reader :score, :x, :y
 
   def initialize(window)
     @image = Gosu::Image.new(window, Ruboto::R::drawable::star_fighter, false)
     @beep = Gosu::Sample.new(window, Ruboto::R::raw::beep)
-    @x = @y = @vel_x = @vel_y = @angle = 0.0
+    @vel_x = @vel_y = @angle = 0.0
+    @x = 320
+    @y = 240
     @score = 0
-  end
-
-  def warp(x, y)
-    @x, @y = x, y
+    @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
   end
 
   def draw
     @image.draw_rot(@x, @y, ZOrder::Player, @angle)
+    @font.draw("Score: #{@score}", 10, 10, 3, 1.0, 1.0, 0xffffff00)
   end
 
-  def collect_stars(stars)
-    stars.reject! do |star|
-      if Gosu::distance(@x, @y, star.x, star.y) < 35 then
-        @score += 10
-        @beep.play
-        true
-      else
-        false
-      end
-    end
+  def touch
+    @score += 1
+    @beep.play
+  end
+
+  def width
+    return @image.width
+  end
+
+  def height
+    return @image.height
   end
 end
 
@@ -63,26 +64,25 @@ class GameWindow < Gosu::Window
     self.caption = "Gosu Tutorial Game"
 
     @background_image = Gosu::Image.new(self, Ruboto::R::drawable::space, true)
-
     @player = Player.new(self)
-    @player.warp(320, 240)
-
     @star_anim = Gosu::Image::load_tiles(self, Ruboto::R::drawable::star, 25, 25, false)
     @stars = Array.new
-
     @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
   end
 
   def update
-    @player.collect_stars(@stars)
     #Normally 25 stars
     if rand(100) < 4 and @stars.size < 5 then
       @stars.push(Star.new(@star_anim))
     end
   end
 
+  # TODO: turn this into touch_ended
   def touch_moved(touch)
-    @player.warp(touch.x, touch.y)
+    if touch.x >= @player.x && touch.x <= @player.x + @player.width &&
+      touch.y >= @player.y && touch.y <= @player.y + @player.height then
+      @player.touch
+    end
   end
 
   def draw
