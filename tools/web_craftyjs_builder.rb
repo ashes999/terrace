@@ -11,6 +11,7 @@ class WebCraftyJsBuilder < Builder
     @source_folder = args[:source_folder]
     @output_folder = args[:output_folder]
     @content_folder = args[:content_folder]
+    @template_folder = args[:template_folder]
     @mode = args[:mode]
 
     raise "Can't build in '#{@mode}' mode" if WEBRUBY_FILES[@mode.to_sym].nil?
@@ -20,7 +21,7 @@ class WebCraftyJsBuilder < Builder
 
   def build(code)
     # Substitute code into the template
-    template_with_code = File.read("#{@source_folder}/#{HTML_TEMPLATE}").sub(SOURCE_PLACEHOLDER, code)
+    template_with_code = File.read("#{@template_folder}/#{HTML_TEMPLATE}").sub(SOURCE_PLACEHOLDER, code)
 
     # Specify debug/release version of webruby
     template_with_code = template_with_code.sub(WEBRUBY_PLACEHOLDER, WEBRUBY_PLACEHOLDER.sub('.js', "-#{@mode}.js"))
@@ -36,7 +37,7 @@ class WebCraftyJsBuilder < Builder
     File.open("#{@output_folder}/#{OUTPUT_FILE}", 'w') { |f|
       f.write(template_with_code)
     }
-    FileUtils.cp_r("#{@source_folder}/lib", "#{@output_folder}/lib")
+    FileUtils.cp_r("#{@template_folder}/lib", "#{@output_folder}/lib")
 
     # Keep one of: webruby-debug or webruby-release
     delete = @mode == 'debug' ? WEBRUBY_FILES[:release] : WEBRUBY_FILES[:debug]
@@ -48,15 +49,15 @@ class WebCraftyJsBuilder < Builder
 
   # Make sure our build files exist on disk
   def ensure_build_files_exist
-    ensure_file_exists("#{@source_folder}/#{HTML_TEMPLATE}")
-    ensure_file_exists("#{@source_folder}/#{CRAFTY_LIB}")
+    ensure_file_exists("#{@template_folder}/#{HTML_TEMPLATE}")
+    ensure_file_exists("#{@template_folder}/#{CRAFTY_LIB}")
     WEBRUBY_FILES.each do |config, file|
-      ensure_file_exists("#{@source_folder}/#{file}")
+      ensure_file_exists("#{@template_folder}/#{file}")
     end
   end
 
   def ensure_source_placeholder_exists
-    content = File.read("#{@source_folder}/#{HTML_TEMPLATE}")
-    raise "Template #{@source_folder}/#{HTML_TEMPLATE} doesn't include placeholder #{SOURCE_PLACEHOLDER}" unless content.include?(SOURCE_PLACEHOLDER)
+    content = File.read("#{@template_folder}/#{HTML_TEMPLATE}")
+    raise "Template #{@template_folder}/#{HTML_TEMPLATE} doesn't include placeholder #{SOURCE_PLACEHOLDER}" unless content.include?(SOURCE_PLACEHOLDER)
   end
 end

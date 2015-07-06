@@ -24,6 +24,9 @@ class Builder
   # Location of target-specific source
   TARGETS_FOLDER = 'lib'
 
+  # Location of templates specific to platforms (eg. web, android)
+  TEMPLATE_FOLDER = 'template'
+
   # Path to mrubymix binaries
   MRUBYMIX = '3rdparty/mrubymix/bin/mrubymix'
 
@@ -63,6 +66,7 @@ class Builder
       :output_folder => "#{OUTPUT_DIR}/#{@target}",
       :content_folder => CONTENT_FOLDER,
       :mode => mode,
+      :template_folder => "#{TEMPLATE_FOLDER}/#{@target}"
     })
 
     amalgamate_code_files
