@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    gosu_android (0.0.5)
+
+PLATFORMS
+  java
+
+DEPENDENCIES
+  gosu_android

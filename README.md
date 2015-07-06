@@ -74,4 +74,8 @@ To build binaries for the desktop target, you also need:
 - The `ocra` gem (1.9.5).
 
 ## For Android binaries ##
-To build against the mobile target for Android, you also need the Android SDK installed (configure the location in `config.rb`). You don't need JRuby or libGDX binaries (we provide those).
+To build against the mobile target for Android, you also need to:
+
+- Install the Android SDK installed with the API-16 platform (rubuto takes care of this)
+- Install the `ruboto` gem (1.3.0)
+- Run `rubuto setup -y`. Note that this installs the Android SDK, ant, etc.
