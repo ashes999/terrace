@@ -55,7 +55,6 @@ Currently, we are working on supporting the following platforms and targets:
 
 - **Web:** `web-craftyjs` (Javascript wrappers around CraftyJS)
 - **Desktop:** `desktop-gosu` (wrappers around Gosu)
-- **Mobile:** `mobile-libgdx` (wrappers around libGDX with JRuby)
 
 # Debug vs. Release Mode
 
