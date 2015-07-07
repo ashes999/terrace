@@ -10,11 +10,11 @@ class Player
   attr_reader :score, :x, :y
 
   def initialize(window)
-    @image = Gosu::Image.new(window, Ruboto::R::drawable::star_fighter, false)
+    @image = Gosu::Image.new(window, Ruboto::R::drawable::square, false)
     @beep = Gosu::Sample.new(window, Ruboto::R::raw::beep)
     @vel_x = @vel_y = @angle = 0.0
-    @x = 320
-    @y = 240
+    @x = 0
+    @y = 0
     @score = 0
     @font = Gosu::Font.new(window, Gosu::default_font_name, 20)
   end
@@ -79,6 +79,7 @@ class GameWindow < Gosu::Window
 
   # TODO: turn this into touch_ended
   def touch_moved(touch)
+    puts "Touched #{touch}; player is at #{@player.x}, #{@player.y} wh=#{@player.width}x#{@player.height}"
     if touch.x >= @player.x && touch.x <= @player.x + @player.width &&
       touch.y >= @player.y && touch.y <= @player.y + @player.height then
       @player.touch
