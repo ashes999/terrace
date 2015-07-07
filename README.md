@@ -2,7 +2,9 @@
 
 **Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
 
-We're currently in the very early stages of development, to try and make this work. Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web) and Gosu (desktop), even though we could use `mruby` with SDL.
+Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web) and Gosu (desktop), even though we could use `mruby` with SDL.
+
+This project is **no longer under active development.** With the exception of Android (which was very hard to produce a stable back-end for), the code works as expected. If a solid, high-velocity back-end for Android emerges (such as a [true Gosu port to Android](https://github.com/gosu/gosu/issues/273)), I may restart this project.
 
 # Getting Started
 
@@ -29,7 +31,7 @@ To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generat
 
 To run your game on your desktop, run `ruby build.rb desktop-gosu`. This will generate a `main.rb` file under `bin/dekstop-gosu`. Run it in Ruby to launch your game.
 
-To run your game on android, run `ruby builld.rb mobile-libgdx`. Provided you have the Android SDK installed, this will generate an `.apk` file under `bin/mobile-libgdx` which you can deploy and test via `adb`.
+~~To run your game on android, run `ruby builld.rb android-gosuandroid`. Provided you have the Android SDK installed, this will generate an `.apk` file under `bin/mobile-libgdx` which you can deploy and test via `adb`.~~
 
 # Main Components
 
@@ -61,7 +63,6 @@ To build your application in release mode, add `release` to the end of the comma
 
 - **Web/CraftyJS:** Debug uses `webruby-debug.js`, which is 5MB (!) but produces verbose error messages. Release builds use the `webruby-release.js` file instead.
 - **Desktop/Gosu:** Release mode builds compiled binaries. On Windows, you get a `game.exe` file to `bin\desktop-gosu`. You can ship this, along with the `content` directory together, as your final, self-executable game.
-- **Mobile/libGDX:** TBD
 
 # Development Environment Setup
 
@@ -73,9 +74,18 @@ To build binaries for the desktop target, you also need:
 - The `gosu` gem (0.9.2). Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
 - The `ocra` gem (1.9.5).
 
-## For Android binaries ##
-To build against the mobile target for Android, you also need to:
+# Next Steps: Android Back-End #
 
-- Install the Android SDK installed with the API-16 platform (rubuto takes care of this)
-- Install the `ruboto` gem (1.3.0)
-- Run `rubuto setup -y`. Note that this installs the Android SDK, ant, etc.
+Android is very difficult target to get working. I had a hard time getting `mruby` to compile (even though the [mruby-sdl2](https://github.com/crimsonwoods/mruby-sdl2) and [mruby-minigame](https://github.com/bggd/mruby-minigame) gems looked promising). I am [not](https://github.com/mruby/mruby/issues/2872) a proficient C/C++ developer.
+
+LibGDX showed promise, but integration with JRuby probably requires a lot of work, so I didn't pursue it.
+
+[Gosu-Android](https://github.com/Garoe/gosu-android/), despite being a dead project, provided the best approach. However, due to some bugs (like [audio replaying strangely](https://github.com/Garoe/gosu-android/issues/14), [touch-done events not firing](https://github.com/Garoe/gosu-android/issues/18), and [screen coordinate wierdness](https://github.com/Garoe/gosu-android/issues/19)), I decided to abandon it.
+
+There are many paths forward -- libGDX, gosu-android, and even SDL with MRuby. I leave it to you to fork and do what you think is best.
+
+To build against the mobile target for Android, you would need to:
+
+- Install the Android SDK installed with the API-16 platform ~~(rubuto takes care of this)~~
+- ~~Install the `ruboto` gem (1.3.0)~~
+- ~~Run `rubuto setup -y`. Note that this installs the Android SDK, ant, etc.~~
