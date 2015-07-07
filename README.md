@@ -82,7 +82,7 @@ LibGDX showed promise, but integration with JRuby probably requires a lot of wor
 
 [Gosu-Android](https://github.com/Garoe/gosu-android/), despite being a dead project, provided the best approach. However, due to some bugs (like [audio replaying strangely](https://github.com/Garoe/gosu-android/issues/14), [touch-done events not firing](https://github.com/Garoe/gosu-android/issues/18), and [screen coordinate wierdness](https://github.com/Garoe/gosu-android/issues/19)), I decided to abandon it.
 
-There are many paths forward -- libGDX, gosu-android, and even SDL with MRuby. I leave it to you to fork and do what you think is best.
+There are many paths forward -- libGDX, gosu-android, the port of gosu to Android, and even SDL with MRuby. I leave it to you to fork and do what you think is best.
 
 To build against the mobile target for Android, you would need to:
 
