@@ -51,10 +51,14 @@ A summary of the main components and their methods:
 
 # Supported Platforms and Targets
 
-Currently, we are working on supporting the following platforms and targets:
+Terrace is two pieces: a common Ruby platform (eg. our `entity` class), and target-specific code. The target-specific code implements compnents (such as `TwoDComponent`) in whatever that platform's back-end is.
 
-- **Web:** `web-craftyjs` (Javascript wrappers around CraftyJS)
-- **Desktop:** `desktop-gosu` (wrappers around Gosu)
+When you run `build.rb`, it uses [mrubymix](https://github.com/xxuejie/mrubymix) to combine both the common code with the specified target code (this is why we use `#= require` instead of `require`). Because we use monkey patching (or "partial classes"), you get consistent Terrace classes in Ruby that just work across all platforms.
+
+- **web-craftyjs:** We use [WebRuby](https://github.com/xxuejie/webruby) to enable Ruby code to run in-browser and talk to Javascript. We created wrappers around [CraftyJS](http://craftyjs.com/) game objects.
+- **desktop-gosu:** We wrap around [Gosu](https://github.com/gosu/gosu) game objects.
+
+All the code (including common and target code) libs in `lib`, while templates (eg. HTML templates for web, along with necessary Javascript libraries) lives in `templates`.
 
 # Debug vs. Release Mode
 
@@ -73,15 +77,17 @@ To build binaries for the desktop target, you also need:
 - The `gosu` gem (0.9.2). Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
 - The `ocra` gem (1.9.5).
 
+When you run the `release` build on Windows, you'll get an executable.
+
 # Next Steps: Android Back-End #
 
 Android is very difficult target to get working. I had a hard time getting `mruby` to compile (even though the [mruby-sdl2](https://github.com/crimsonwoods/mruby-sdl2) and [mruby-minigame](https://github.com/bggd/mruby-minigame) gems looked promising). I am [not](https://github.com/mruby/mruby/issues/2872) a proficient C/C++ developer.
 
-LibGDX showed promise, but integration with JRuby probably requires a lot of work, so I didn't pursue it.
+LibGDX showed promise, but integration with JRuby requires a lot of work, and I [couldn't figure it out](https://github.com/ruboto/ruboto/issues/743).
 
 [Gosu-Android](https://github.com/Garoe/gosu-android/), despite being a dead project, provided the best approach. However, due to some bugs (like [audio replaying strangely](https://github.com/Garoe/gosu-android/issues/14), [touch-done events not firing](https://github.com/Garoe/gosu-android/issues/18), and [screen coordinate wierdness](https://github.com/Garoe/gosu-android/issues/19)), I decided to abandon it.
 
-There are many paths forward -- libGDX, gosu-android, the port of gosu to Android, and even SDL with MRuby. I leave it to you to fork and do what you think is best.
+There are many paths forward -- including the port of gosu to Android, and even SDL with MRuby. I leave it to you to fork and do what you think is best.
 
 To build against the mobile target for Android, you would need to:
 

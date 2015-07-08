@@ -1,19 +1,14 @@
 require 'ruboto/widget'
 require 'ruboto/util/toast'
-require 'gosu'
 
-#require 'libs/gdx.jar'
-#require 'libs/gdx-backend-android.jar'
-#require 'libs/gdx-box2d.jar'
-#require 'libs/gdx-box2d-natives.jar'
-#require 'libs/gdx-natives.jar'
-
+# LibGDX
 java_import com.badlogic.gdx.ApplicationAdapter;
 java_import com.badlogic.gdx.Gdx;
 java_import com.badlogic.gdx.graphics.GL20;
 java_import com.badlogic.gdx.graphics.Texture;
 java_import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+# LibGDX on Android
 java_import android.os.Bundle;
 java_import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 java_import com.badlogic.gdx.backends.android.AndroidApplication;

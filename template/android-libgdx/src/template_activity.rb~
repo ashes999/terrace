@@ -46,13 +46,12 @@ class TemplateActivity
   def on_create(bundle)
     super(bundle)
     #Gosu::AndroidInitializer.instance.start(self)
-    AndroidLauncher.new.onCreate(nil)
     rescue Exception => e
       puts "#{ e } (#{ e.class } #{e.message} #{e.backtrace.inspect} )!"
   end
 
   def on_ready
-    #AndroidLauncher.new.onCreate(nil)
+    AndroidLauncher.new.onCreate(nil)
     rescue Exception => e
       puts "#{ e } (#{ e.class } #{e.message} #{e.backtrace.inspect} )!"
   end
