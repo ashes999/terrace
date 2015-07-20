@@ -14,11 +14,13 @@ java_import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 java_import com.badlogic.gdx.backends.android.AndroidApplication;
 
 class AndroidLauncher < AndroidApplication
-
-  def onCreate(savedInstanceState)
-    super.onCreate(savedInstanceState)
+  def onCreate(bundle)
+    # super
     config = AndroidApplicationConfiguration.new
-    initialize(TestGame.new, config)
+    self.content_view = initialize_for_view(TestGame.new, config)
+  rescue Exception => e
+    puts "Exception starting #{self.class}: #{e} (#{e.class} #{e.message})\n#{e.backtrace.join("\n")}"
+    super
   end
 end
 
@@ -38,16 +40,11 @@ class TestGame < ApplicationAdapter
 end
 
 class TemplateActivity
-  def on_create(bundle)
-    super(bundle)
-    #Gosu::AndroidInitializer.instance.start(self)
-    rescue Exception => e
-      puts "#{ e } (#{ e.class } #{e.message} #{e.backtrace.inspect} )!"
-  end
-
-  def on_ready
-    AndroidLauncher.new.onCreate(nil)
-    rescue Exception => e
-      puts "#{ e } (#{ e.class } #{e.message} #{e.backtrace.inspect} )!"
+  def onCreate(bundle)
+    super
+    start_ruboto_activity(AndroidLauncher)
+    finish
+  rescue Exception => e
+    puts "Exception starting #{self.class}: #{e} (#{e.class}) #{e.message}\n#{e.backtrace.join("\n")}"
   end
 end
