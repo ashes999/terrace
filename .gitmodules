@@ -4,3 +4,6 @@
 [submodule "3rdparty/mrubymix"]
 	path = 3rdparty/mrubymix
 	url = https://github.com/xxuejie/mrubymix
+[submodule "mruby"]
+	path = 3rdparty/mruby
+	url = git@github.com:ashes999/mruby.git
