@@ -4,3 +4,6 @@
 [submodule "mruby"]
 	path = 3rdparty/mruby
 	url = git@github.com:ashes999/mruby.git
+[submodule "webruby"]
+	path = 3rdparty/webruby
+	url = git@github.com:ashes999/webruby.git
