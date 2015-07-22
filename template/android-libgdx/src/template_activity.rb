@@ -13,17 +13,6 @@ java_import android.os.Bundle;
 java_import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 java_import com.badlogic.gdx.backends.android.AndroidApplication;
 
-class AndroidLauncher < AndroidApplication
-  def onCreate(bundle)
-    # super
-    config = AndroidApplicationConfiguration.new
-    self.content_view = initialize_for_view(TestGame.new, config)
-  rescue Exception => e
-    puts "Exception starting #{self.class}: #{e} (#{e.class} #{e.message})\n#{e.backtrace.join("\n")}"
-    super
-  end
-end
-
 class TestGame < ApplicationAdapter
   def create
     @batch = SpriteBatch.new
@@ -36,6 +25,22 @@ class TestGame < ApplicationAdapter
     @batch.begin
     @batch.draw(@img, 0, 0)
     @batch.end
+  end
+end
+
+### boilerplate/launcher code below
+
+class AndroidLauncher < AndroidApplication
+  def onCreate(bundle)
+    super
+    config = AndroidApplicationConfiguration.new
+    game = TestGame.new
+    initialize(game, config)
+    self.content_view = initialize_for_view(game, config)
+    puts "Content view is #{self.content_view}"
+  rescue Exception => e
+    puts "Exception starting #{self.class}: #{e} (#{e.class} #{e.message})\n#{e.backtrace.join("\n")}"
+    super
   end
 end
 

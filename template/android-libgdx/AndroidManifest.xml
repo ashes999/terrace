@@ -12,5 +12,5 @@
         <activity android:exported='false' android:name='org.ruboto.RubotoDialog' android:theme='@android:style/Theme.Dialog'/>
         <service android:exported='false' android:name='org.ruboto.RubotoService'/>
     </application>
-    <uses-sdk android:minSdkVersion='16' android:targetSdkVersion='16'/>
+    <uses-sdk android:minSdkVersion='16' android:targetSdkVersion='22'/>
 </manifest>
