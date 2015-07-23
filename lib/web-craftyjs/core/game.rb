@@ -10,8 +10,6 @@ class Game
   def load_content(files, callback)
     puts "@@@LOAD CONTENT F=#{files}"
     puts "@@@LOAD CONTENT C=#{callback}"
-    Crafty.load(files, lambda {
-      callback.call
-    })
+    Crafty.load(files, callback)
   end
 end

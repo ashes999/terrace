@@ -5,10 +5,10 @@ class AudioComponent < BaseComponent
   def play(filename, options = {})
     # Needs a key, and a filename. Use the filename as the key
     key = filename
-    `Crafty.audio.add(key, filename)`
+    Crafty.audio.add(key, filename)
     loop = options[:loop] || false
     loop = (loop == true) ? -1 : 1
-    `Crafty.audio.play(key, loop)`
+    Crafty.audio.play(key, loop)
   end
 
   def crafty_name
