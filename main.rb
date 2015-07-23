@@ -5,7 +5,9 @@
 # Load the terrace library, and target-specific code. Do not remove these!
 #= require ./lib/common/terrace_common.rb
 #= require ./lib/TARGET/terrace.rb
+
 g = Game.new(800, 600)
+puts "@@@LOADING CONTENT"
 g.load_content({
   :images => ['content/images/fox.png', 'content/images/emblem.png'],
   :audio => ['content/audio/noise.ogg']

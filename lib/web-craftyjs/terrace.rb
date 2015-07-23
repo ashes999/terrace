@@ -1,4 +1,5 @@
 # Used to require web-craftyjs files
+#= require ./crafty_wrapper
 #= require ./core/entity
 #= require ./core/game
 #= require ./components/image_component

@@ -1,7 +1,4 @@
 class Entity
-  $window = MrubyJs::get_root_object
-  $crafty = $window.Crafty
-
   def initialize(*components)
     @components = components
 
@@ -14,11 +11,11 @@ class Entity
     end
 
     if component_names.include?('Text') && component_names.include?('Color')
-      # These collide. You get a solid block.
+      # These conflict. You get a solid block of color (no visible text).
       component_names = component_names.sub('Color,', '')
     end
 
-    @me = $crafty.e(component_names)
+    @me = Crafty.e(component_names)
 
     @components.each do |c|
       # In CraftyJS, you make calls directly to the entity, not components
