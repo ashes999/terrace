@@ -8,8 +8,6 @@ class Game
   # Loads images and audio. Files is a hash. When done, it invokes the callback.
   # eg. files = { :images => [ ... ], :audio => [ ... ] }
   def load_content(files, callback)
-    puts "@@@LOAD CONTENT F=#{files}"
-    puts "@@@LOAD CONTENT C=#{callback}"
     Crafty.load(files, callback)
   end
 end

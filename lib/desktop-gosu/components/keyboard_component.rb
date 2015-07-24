@@ -1,6 +1,7 @@
 class KeyboardComponent < BaseComponent
 
-  SPEED = 8 # TODO: parameterize
+  # TODO: parameterize
+  SPEED = 8 
 
   @@all = []
 
@@ -18,7 +19,7 @@ class KeyboardComponent < BaseComponent
   end
 
   ### internal
-  
+
   def update
     return unless @move_with_arrows
 

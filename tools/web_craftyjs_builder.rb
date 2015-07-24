@@ -3,8 +3,7 @@ require 'opal'
 class WebCraftyJsBuilder < Builder
   INDEX_HTML = 'index.html'
   OUTPUT_FILE = 'main.js'
-  CRAFTY_LIB = 'lib/crafty-min.js'
-  OPAL_LIB = 'lib/opal.min.js'
+  REQUIRED_FILES = [INDEX_HTML, 'lib/crafty-min-0.6.3-dev.js', 'lib/opal-0.8.0.min.js', 'lib/native-0.8.0.min.js']
   TARGET = 'web-craftyjs'
 
   def initialize(args)
@@ -40,8 +39,8 @@ class WebCraftyJsBuilder < Builder
 
   # Make sure our build files exist on disk
   def ensure_build_files_exist
-    ensure_file_exists("#{@template_folder}/#{INDEX_HTML}")
-    ensure_file_exists("#{@template_folder}/#{CRAFTY_LIB}")
-    ensure_file_exists("#{@template_folder}/#{OPAL_LIB}")
+    REQUIRED_FILES.each do |r|
+      ensure_file_exists("#{@template_folder}/#{r}")
+    end
   end
 end
