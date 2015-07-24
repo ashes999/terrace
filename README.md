@@ -1,5 +1,7 @@
 # Terrace
 
+![build status](https://travis-ci.org/ashes999/terrace.svg?branch=master)
+
 **Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
 
 Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web) and Gosu (desktop), even though we could use `mruby` with SDL.
