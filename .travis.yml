@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 1.9.3
+before_install:
+  - git submodule update --init --recursive
+install:
+  - ruby build.rb web-craftyjs
+  - ruby build.rb desktop-gosu  

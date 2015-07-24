@@ -71,13 +71,18 @@ To build your application in release mode, add `release` to the end of the comma
 
 If you plan to contribute to `terrace`, you need to set up Ruby (1.9.3 or newer)
 
-## For Windows binaries ##
+## Windows
 To build binaries for the desktop target, you also need:
 
 - The `gosu` gem (0.9.2). Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
 - The `ocra` gem (1.9.5).
 
 When you run the `release` build on Windows, you'll get an executable.
+
+## Web
+To build binaries for the web, you need:
+
+- The `opal` gem (0.8.0)
 
 # Next Steps: Android Back-End #
 

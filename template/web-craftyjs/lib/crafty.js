@@ -195,7 +195,7 @@ Crafty.c("2D", {
     _parent: null,
     _changed: false,
 
-    
+
 
     _define2DProperties: function () {
         Object.defineProperty(this, 'x', {
@@ -311,10 +311,10 @@ Crafty.c("2D", {
 
         this._children = [];
 
-        
-   
+
+
         this._define2DProperties();
-        
+
 
         //insert self into the HashMap
         this._entry = Crafty.map.insert(this);
@@ -372,7 +372,7 @@ Crafty.c("2D", {
      * #.offsetBoundary
      * @comp 2D
      * Extends the MBR of the entity by a specified amount.
-     * 
+     *
      * @trigger BoundaryOffset - when the MBR offset changes
      * @sign public this .offsetBoundary(Number dx1, Number dy1, Number dx2, Number dy2)
      * @param dx1 - Extends the MBR to the left by this amount
@@ -446,9 +446,9 @@ Crafty.c("2D", {
         }
 
         // If a collision hitbox exists AND sits outside the entity, find a bounding box for both.
-        // `_cbr` contains information about a bounding circle of the hitbox. 
+        // `_cbr` contains information about a bounding circle of the hitbox.
         // The bounds of `_cbr` will be the union of the `_mbr` and the bounding box of that circle.
-        // This will not be a minimal region, but since it's only used for the broad phase pass it's good enough. 
+        // This will not be a minimal region, but since it's only used for the broad phase pass it's good enough.
         //
         // cbr is calculated by the `_checkBounds` method of the "Collision" component
         if (this._cbr) {
@@ -969,7 +969,7 @@ Crafty.c("2D", {
  * #Gravity
  * @category 2D
  * @trigger Moved - When entity has moved on y-axis a Moved event is triggered with an object specifying the old position {x: old_x, y: old_y}
- * 
+ *
  * Adds gravitational pull to the entity.
  */
 Crafty.c("Gravity", {
@@ -1748,7 +1748,7 @@ Crafty.extend({
          * @param clientX - clientX position in the browser screen
          * @param clientY - clientY position in the browser screen
          * @return Object `{x: ..., y: ...}` with Crafty coordinates.
-         * 
+         *
          * The parameters clientX and clientY are pixel coordinates within the visible
          * browser window. This function translates those to Crafty coordinates (i.e.,
          * the coordinates that you might apply to an entity), by taking into account
@@ -2925,7 +2925,7 @@ Crafty.extend({
 
             //Bind rendering of canvas context (see drawing.js)
             Crafty.uniqueBind("RenderScene", Crafty.DrawManager.renderCanvas);
-            
+
             Crafty.uniqueBind("ViewportResize", this._resize);
         },
 
@@ -3672,7 +3672,7 @@ var Crafty = require('./core.js'),
  */
 Crafty.extend({
     assignColor: (function(){
-        
+
         // Create phantom element to assess color
         var element = document.createElement("div");
         element.style.display = "none";
@@ -3734,7 +3734,7 @@ Crafty.extend({
         function parseRgbString(rgb, c) {
             var values = rgb_regex.exec(rgb);
             if( values===null || (values.length != 4 && values.length != 5)) {
-                return default_value(c); // return bad result?         
+                return default_value(c); // return bad result?
             }
             c._red = Math.round(parseFloat(values[1]));
             c._green = Math.round(parseFloat(values[2]));
@@ -3842,7 +3842,7 @@ Crafty.c("Color", {
      * @param r - value for the red channel
      * @param g - value for the green channel
      * @param b - value for the blue channel
-     * @param strength - the opacity of the rectangle 
+     * @param strength - the opacity of the rectangle
      *
      * @sign public String .color()
      * @return A string representing the current color as a CSS property.
@@ -3924,14 +3924,14 @@ Crafty.extend({
         if (!Crafty.selected && selected) {
             Crafty.trigger("CraftyFocus");
         }
-        
+
         if (Crafty.selected && !selected) {
             Crafty.trigger("CraftyBlur");
         }
-        
+
         Crafty.selected = selected;
     },
-    
+
     resetKeyDown: function() {
         // Tell all the keys they're no longer held down
         for (var k in Crafty.keys) {
@@ -3941,10 +3941,10 @@ Crafty.extend({
                  });
              }
         }
-		
+
         Crafty.keydown = {};
     },
-    
+
     /**@
      * #Crafty.mouseDispatch
      * @category Input
@@ -4808,7 +4808,7 @@ Crafty.c("Fourway", {
  * @category Input
  * @trigger NewDirection - When direction changes a NewDirection event is triggered with an object detailing the new direction: {x: x_movement, y: y_movement}. This is consistent with Fourway and Multiway components.
  * @trigger Moved - When entity has moved on x-axis a Moved event is triggered with an object specifying the old position {x: old_x, y: old_y}
- * 
+ *
  * Move an entity left or right using the arrow keys or `D` and `A` and jump using up arrow or `W`.
  */
 Crafty.c("Twoway", {
@@ -5301,7 +5301,7 @@ Crafty.fn = Crafty.prototype = {
      * @param property - Property of the entity to modify
      * @returns Value - the value of the property
      * Use this method to get any property of the entity. You can also retrieve the property using `this.property`.
-     * 
+     *
      *
      * @example
      * ~~~
@@ -6150,7 +6150,7 @@ Crafty.extend({
                 // dt is determined by the mode
                 for (var i = 0; i < loops; i++) {
                     lastFrameTime = currentTime;
-                    
+
                     var frameData = {
                         frame: frame++,
                         dt: dt,
@@ -6273,7 +6273,7 @@ Crafty.extend({
      * Creates a component where the first argument is the ID and the second
      * is the object that will be inherited by entities.
      *
-     * Specifically, each time a component is added to an entity, the component properties are copied over to the entity. 
+     * Specifically, each time a component is added to an entity, the component properties are copied over to the entity.
      * * In the case of primitive datatypes (booleans, numbers, strings) the property is copied by value.
      * * In the case of complex datatypes (objects, arrays, functions) the property is copied by reference and will thus reference the components' original property.
      * * (See the two examples below for further explanation)
@@ -7533,17 +7533,17 @@ Crafty.extend({
      * Setting this to true disables smoothing for images, which is the preferred
      * way for drawing pixel art. Defaults to false.
      *
-     * This feature is experimental and you should be careful with cross-browser compatibility. 
+     * This feature is experimental and you should be careful with cross-browser compatibility.
      * The best way to disable image smoothing is to use the Canvas render method and the Sprite component for drawing your entities.
      *
-     * If you want to switch modes in the middle of a scene, 
-     * be aware that canvas entities won't be drawn in the new style until something else invalidates them. 
+     * If you want to switch modes in the middle of a scene,
+     * be aware that canvas entities won't be drawn in the new style until something else invalidates them.
      * (You can manually invalidate all canvas entities with `Crafty("Canvas").trigger("Invalidate");`)
      *
-     * Note that Firefox_26 currently has a [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=696630) 
+     * Note that Firefox_26 currently has a [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=696630)
      * which prevents disabling image smoothing for Canvas entities that use the Image component. Use the Sprite
      * component instead.
-     * Note that Webkit (Chrome & Safari) currently has a bug [link1](http://code.google.com/p/chromium/issues/detail?id=134040) 
+     * Note that Webkit (Chrome & Safari) currently has a bug [link1](http://code.google.com/p/chromium/issues/detail?id=134040)
      * [link2](http://code.google.com/p/chromium/issues/detail?id=106662) that prevents disabling image smoothing
      * for DOM entities.
      *
@@ -7552,7 +7552,7 @@ Crafty.extend({
      * ~~~
      * Crafty.canvas.init();
      * Crafty.pixelart(true);
-     * 
+     *
      * Crafty.sprite(imgWidth, imgHeight, "spriteMap.png", {sprite1:[0,0]});
      * Crafty.e("2D, Canvas, sprite1");
      * ~~~
@@ -7798,13 +7798,13 @@ Crafty.extend({
      * This method is a shortcut for adding a background
      * style to the stage element, i.e.
      * `Crafty.stage.elem.style.background = ...`
-     * 
+     *
      * For example, if you want the background to be white,
      * with an image in the center, you might use:
      * ~~~
      * Crafty.background('#FFFFFF url(landscape.png) no-repeat center center');
      * ~~~
-     *  
+     *
      */
     background: function (style) {
         Crafty.stage.elem.style.background = style;
@@ -8335,7 +8335,7 @@ Crafty.extend({
      * ~~~
      * Crafty.paths({ audio: "custom/audio/path/", images: "custom/images/path/" });
      *
-     * Crafty.load({ 
+     * Crafty.load({
      *   "audio": {
      *     "ray": ['ray.mp3'] // This loads ray.mp3 from custom/audio/path/ray.mp3
      *   }
@@ -8402,7 +8402,7 @@ Crafty.extend({
      * ~~~
      * // add tif extension to list of supported image files
      * Crafty.image_whitelist.push("tif");
-     * 
+     *
      * var assets = {
      *     "sprites": {
      *         "sprite.tif": {   //set a tif sprite
@@ -8443,22 +8443,22 @@ Crafty.extend({
      * @param onProgress - Callback when an asset is loaded. Contains information about assets loaded
      * @param onError - Callback when an asset fails to load
      *
-     * Preloader for all assets. Takes a JSON formatted object (or JSON string) of files and adds them to the 
+     * Preloader for all assets. Takes a JSON formatted object (or JSON string) of files and adds them to the
      * `Crafty.assets` object, as well as setting sprites accordingly.
      *
      * Format must follow the pattern shown in the example below, but it's not required to pass all "audio",
      * "images" and "sprites" properties, only those you'll need. For example, if you don't need to preload
      * sprites, you can omit that property.
-     * 
+     *
      * By default, Crafty will assume all files are in the current path.  For changing these,
      * use the function `Crafty.paths`.
-     * 
+     *
      * Files with suffixes in `image_whitelist` (case insensitive) will be loaded.
-     * 
+     *
      * It's possible to pass the full file path(including protocol), instead of just the filename.ext, in case
      * you want some asset to be loaded from another domain.
      *
-     * If `Crafty.support.audio` is `true`, files with the following suffixes `mp3`, `wav`, `ogg` and 
+     * If `Crafty.support.audio` is `true`, files with the following suffixes `mp3`, `wav`, `ogg` and
      * `mp4` (case insensitive) can be loaded.
      *
      * The `onProgress` function will be passed on object with information about
@@ -8482,8 +8482,8 @@ Crafty.extend({
      *         "slash": "slash.wav"
      *     },
      *     "images": ["badguy.bmp", "goodguy.png"],
-     *     "sprites": { 
-     *         "animals.png": { 
+     *     "sprites": {
+     *         "animals.png": {
      *             "tile": 50,
      *             "tileh": 40,
      *             "map": { "ladybug": [0,0], "lazycat": [0,1], "ferociousdog": [0,2] }
@@ -8498,7 +8498,7 @@ Crafty.extend({
      *         }
      *     },
      * };
-     * 
+     *
      * Crafty.load(assetsObj, // preload assets
      *     function() { //when loaded
      *         Crafty.scene("main"); //go to main scene
@@ -8520,9 +8520,9 @@ Crafty.extend({
      * @see Crafty.removeAssets
      */
     load: function (data, oncomplete, onprogress, onerror) {
-      
+
         data = (typeof data === "string" ? JSON.parse(data) : data);
-      
+
         var j = 0,
             total = (data.audio ? Object.keys(data.audio).length : 0) +
               (data.images ? Object.keys(data.images).length : 0) +
@@ -8594,6 +8594,9 @@ Crafty.extend({
             for(asset in data[type]) {
 
                 current = data[type][asset];
+                if ((typeof current) != 'string') {
+                  continue;
+                }
 
                 if (type === "audio" && audSupport) {
                     if (typeof current === "object") {
@@ -8649,13 +8652,13 @@ Crafty.extend({
      * @param data - Object JSON formatted (or JSON string), with assets to remove (accepts sounds, images and sprites)
      * Removes assets (audio, images, sprites - and related sprite components) in order to allow the browser
      * to free memory.
-     * 
+     *
      * Recieves a JSON fomatted object (or JSON string) containing 'audio', 'images' and/or 'sprites'
      * properties with assets to be deleted. Follows a similar format as Crafty.load 'data' argument. If
      * you pass the exact same object passed to Crafty.load, that will delete everything loaded that way.
      * For sprites, if you want to keep some specific component, just don't pass that component's name in
      * the sprite 'map'.
-     * 
+     *
      * Note that in order to remove the sprite components related to a given sprite, it's required to
      * pass the 'map' property of that sprite, and although its own properties's values (the properties refer
      * to sprite components) are not used in the removing process, omitting them will cause an error (since
@@ -8682,25 +8685,25 @@ Crafty.extend({
      *         }
      *     }
      * }
-     * 
+     *
      * Crafty.removeAssets(assetsToRemoveObj);
      * ~~~
      *
      * @see Crafty.load
      */
     removeAssets: function(data) {
-      
+
         data = (typeof data === "string" ? JSON.parse(data) : data);
-      
+
         var current, fileUrl, type, asset,
             paths = Crafty.paths(),
             getFilePath = function(type,f) {
                 return (f.search("://") === -1 ? (type == "audio" ? paths.audio + f : paths.images + f) : f);
             };
-      
+
         for (type in data) {
             for (asset in data[type]) {
-              
+
                 current = data[type][asset];
 
                 if (type === "audio") {
@@ -10367,7 +10370,7 @@ Crafty.extend({
      *     Crafty.e("2D, DOM, Color")
      *           .attr(attributes)
      *           .color("red");
-     * 
+     *
      * });
      *
      * ~~~
@@ -10402,7 +10405,7 @@ Crafty.extend({
         Crafty.defineScene(name, intro, outro);
     },
 
-    /* 
+    /*
      * #Crafty.defineScene
      * @category Scenes, Stage
      *
@@ -10425,7 +10428,7 @@ Crafty.extend({
 
     },
 
-    /* 
+    /*
      * #Crafty.enterScene
      * @category Scenes, Stage
      * @trigger SceneChange - just before a new scene is initialized - { oldScene:String, newScene:String }
@@ -10434,7 +10437,7 @@ Crafty.extend({
      * @sign public void Crafty.enterScene(String name[, Data])
      * @param name - Name of the scene to run.
      * @param Data - The init function of the scene will be called with this data as its parameter.  Can be of any type other than a function.
-     * 
+     *
      * @see Crafty.defineScene
      * @see Crafty.scene
      */
@@ -10786,7 +10789,7 @@ Crafty.extend({
          *
          * Will stop the sound and remove all references to the audio object allowing the browser to free the memory.
          * If no id is given, all sounds will be removed.
-         * 
+         *
          * This function uses audio path set in Crafty.path in order to remove sound from the assets object.
          *
          * @example
@@ -11618,7 +11621,7 @@ Crafty.extend({
             this.__padding = [paddingX, paddingY];
             this.__padBorder = paddingAroundBorder;
             this.sprite(this.__coord[0], this.__coord[1], this.__coord[2], this.__coord[3]);
-            
+
             this.img = img;
             //draw now
             if (this.img.complete && this.img.width > 0) {
@@ -11817,7 +11820,7 @@ var Crafty = require('./core.js'),
  * @param key - the key you would like to save the data under.
  * @param value - the value you would like to save, can be an Object or an Array.
  *
- * Storage function is very simple and can be used to either get or set values. 
+ * Storage function is very simple and can be used to either get or set values.
  * You can store both booleans, strings, objects and arrays.
  *
  * Please note: You should not store data, while the game is playing, as it can cause the game to slow down. You should load data when you start the game, or when the user for an example click a "Save gameprocess" button.
@@ -11867,7 +11870,7 @@ Crafty.storage = function(key, value){
     }
 
     storage.setItem(key, _value);
-    
+
   }
 
 };
@@ -12050,7 +12053,7 @@ Crafty.c("Text", {
      * @sign public this .textColor(String color)
      * @param color - The color in name, hex, rgb or rgba
      *
-     * Change the color of the text. You can use HEX, rgb and rgba colors. 
+     * Change the color of the text. You can use HEX, rgb and rgba colors.
      *
      * If you want the text to be transparent, you should use rgba where you can define alphaChannel.
      *
@@ -12133,7 +12136,7 @@ Crafty.c("Text", {
      * This method sets the text so that it cannot be selected (highlighted) by dragging.
      * (Canvas text can never be highlighted, so this only matters for DOM text.)
      * Works by changing the css property "user-select" and its variants.
-     * 
+     *
      * Likewise, this sets the mouseover cursor to be "default" (arrow), not "text" (I-beam)
      *
      * @example
@@ -12206,7 +12209,7 @@ Crafty.c("Delay", {
      * @param repeat - (optional) How often to repeat the delayed function. A value of 0 triggers the delayed
      * function exactly once. A value n > 0 triggers the delayed function exactly n+1 times. A
      * value of -1 triggers the delayed function indefinitely. Defaults to one execution.
-     * @param callbackOff - (optional) Method to execute after delay ends(after all iterations are executed). 
+     * @param callbackOff - (optional) Method to execute after delay ends(after all iterations are executed).
      * If repeat value equals -1, callbackOff will never be triggered.
      *
      * The delay method will execute a function after a given amount of time in milliseconds.
@@ -12300,12 +12303,12 @@ Crafty.extend({
      *
      * Viewport is essentially a 2D camera looking at the stage. Can be moved or zoomed, which
      * in turn will react just like a camera moving in that direction.
-     * 
+     *
      * Tip: At any given moment, the stuff that you can see is...
-     * 
+     *
      * `x` between `(-Crafty.viewport._x)` and `(-Crafty.viewport._x + (Crafty.viewport._width / Crafty.viewport._scale))`
-     * 
-     * `y` between `(-Crafty.viewport._y)` and `(-Crafty.viewport._y + (Crafty.viewport._height / Crafty.viewport._scale))` 
+     *
+     * `y` between `(-Crafty.viewport._y)` and `(-Crafty.viewport._y + (Crafty.viewport._height / Crafty.viewport._scale))`
      */
     viewport: {
         /**@
@@ -12352,7 +12355,7 @@ Crafty.extend({
          * This value is the current scale (zoom) of the viewport. When the value is bigger than 1, everything
          * looks bigger (zoomed in). When the value is less than 1, everything looks smaller (zoomed out). This
          * does not alter the size of the stage itself, just the magnification of what it shows.
-         * 
+         *
          * This is a read-only property: Do not set it directly. Instead, use `Crafty.viewport.scale(...)`
          * or `Crafty.viewport.zoom(...)`
          */
@@ -12416,7 +12419,7 @@ Crafty.extend({
             return this.rect_object;
         },
 
-        /**@ 
+        /**@
 
          * #Crafty.viewport.pan
          * @comp Crafty.viewport
@@ -12468,7 +12471,7 @@ Crafty.extend({
 
                 // bind to event, using uniqueBind prevents multiple copies from being bound
                 Crafty.uniqueBind("EnterFrame", enterFrame);
-                       
+
             };
         })(),
 
@@ -12555,7 +12558,7 @@ Crafty.extend({
          * Zooming is multiplicative. To reset the zoom amount, pass 0.
          */
         zoom: (function () {
-            
+
 
             function stopZoom(){
                 Crafty.unbind("EnterFrame", enterFrame);
@@ -12616,7 +12619,7 @@ Crafty.extend({
                 startingZoom = Crafty.viewport._scale;
                 finalAmount = amt;
                 finalZoom = startingZoom * finalAmount;
-                
+
 
                 startingX = Crafty.viewport.x;
                 startingY = Crafty.viewport.y;
@@ -12628,7 +12631,7 @@ Crafty.extend({
                 Crafty.uniqueBind("EnterFrame", enterFrame);
             };
 
-            
+
         })(),
         /**@
          * #Crafty.viewport.scale
@@ -12641,7 +12644,7 @@ Crafty.extend({
          * When `amt` is 10, that same entity would appear 200 pixels wide (i.e., zoomed in
          * by a factor of 10), and when `amt` is 0.1, that same entity would be 2 pixels wide
          * (i.e., zoomed out by a factor of `(1 / 0.1)`).
-         * 
+         *
          * If you pass an `amt` of 0, it is treated the same as passing 1, i.e. the scale is reset.
          *
          * This method sets the absolute scale, while `Crafty.viewport.zoom` sets the scale relative to the existing value.
@@ -12805,7 +12808,7 @@ Crafty.extend({
              * `Crafty.stage.inner` is a div inside the `#cr-stage` div that holds all DOM entities.
              * If you use canvas, a `canvas` element is created at the same level in the dom
              * as the the `Crafty.stage.inner` div. So the hierarchy in the DOM is
-             *  
+             *
              * ~~~
              * Crafty.stage.elem
              *  - Crafty.stage.inner (a div HTMLElement)
@@ -12916,7 +12919,7 @@ Crafty.extend({
                 Crafty.stage.y = offset.y;
             }
 
-            
+
         },
 
         // Create setters/getters for x, y, width, height
