@@ -1,1 +1,1 @@
-task default:
+task :default
