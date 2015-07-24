@@ -1,6 +1,6 @@
 # Terrace
 
-![build status](https://travis-ci.org/ashes999/terrace.svg?branch=master)
+[![build status](https://travis-ci.org/ashes999/terrace.svg?branch=master)](https://travis-ci.org/ashes999/terrace)
 
 **Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
 
