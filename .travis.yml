@@ -4,7 +4,7 @@ rvm:
 before_install:
   - git submodule update --init --recursive
   - gem install opal
-  - gem install ocra
+  - gem install gosu
 install:
   - ruby build.rb web-craftyjs
   - ruby build.rb desktop-gosu
