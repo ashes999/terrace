@@ -22,7 +22,6 @@ class KeyboardComponent < BaseComponent
   ### internal
 
   def update(elapsed_seconds)
-    puts "u #{elapsed_seconds}"
     return unless @move_with_arrows
     actual_move = SPEED * elapsed_seconds
 
