@@ -11,6 +11,7 @@ class Game < Gosu::Window
     super(width, height, false)
     @@window = self
     self.caption = "Desktop Target"
+    @last_update = Time.new
   end
 
   def load_content(files, callback)
@@ -28,8 +29,13 @@ class Game < Gosu::Window
   end
 
   def update
+    now = Time.new
+    elapsed_seconds = now - @last_update
+    @last_update = now
+    # TODO: consider sending this in pieces of <= 50ms max to prevent integration
+    # problems, like fast-moving objects skipping over collisions entirely
     KeyboardComponent::all.each do |k|
-      k.update
+      k.update(elapsed_seconds)
     end
   end
 

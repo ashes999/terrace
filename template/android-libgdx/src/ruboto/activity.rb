@@ -82,6 +82,8 @@ module Ruboto
       end
       i = android.content.Intent.new
       i.setClass self, java_class.java_class
+      # http://stackoverflow.com/questions/19430855/nullpointerexcepcion-with-robolectric-on-activity-oncreate
+      raise "@1@ #{java_class} @2@ #{java_class.java_class} @3@"
       i.add_flags(flags) if flags
       i.putExtra(Ruboto::THEME_KEY, theme) if theme
       i.putExtra(Ruboto::CLASS_NAME_KEY, class_name) if class_name

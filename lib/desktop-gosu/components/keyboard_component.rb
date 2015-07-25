@@ -1,7 +1,8 @@
 class KeyboardComponent < BaseComponent
 
   # TODO: parameterize
-  SPEED = 8 
+  # pixels per second
+  SPEED = 128
 
   @@all = []
 
@@ -20,23 +21,25 @@ class KeyboardComponent < BaseComponent
 
   ### internal
 
-  def update
+  def update(elapsed_seconds)
+    puts "u #{elapsed_seconds}"
     return unless @move_with_arrows
+    actual_move = SPEED * elapsed_seconds
 
     if is_down?(Gosu::KbRight) || is_down?(Gosu::KbD)
-      @entity.x += SPEED
+      @entity.x += actual_move
     end
 
     if is_down?(Gosu::KbDown) || is_down?(Gosu::KbS)
-      @entity.y += SPEED
+      @entity.y += actual_move
     end
 
     if is_down?(Gosu::KbLeft) || is_down?(Gosu::KbA)
-      @entity.x -= SPEED
+      @entity.x -= actual_move
     end
 
     if is_down?(Gosu::KbUp) || is_down?(Gosu::KbW)
-        @entity.y -= SPEED
+        @entity.y -= actual_move
     end
   end
 
