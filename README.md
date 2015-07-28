@@ -31,7 +31,7 @@ To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generat
 
 To run your game on your desktop, run `ruby build.rb desktop-gosu`. This will generate a `main.rb` file under `bin/dekstop-gosu`. Run it in Ruby to launch your game. (You can build it in `release` mode, with Ocra, to generate an executable on Windows.)
 
-To run your game on android, run `ruby builld.rb android-libgdx`. Provided you have the Ruboto installed correctly, this will generate an `.apk` file under `bin/android-libgdx` which you can deploy and test via `adb`.
+To run your game on android, run `ruby builld.rb android-libgdx`. Provided you have the Ruboto installed correctly, this will generate a `Libgdx-Deebug.apk` file under `bin/android-libgdx/bin` which you can deploy and test via `adb`.
 
 # Main Components
 
