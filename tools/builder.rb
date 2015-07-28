@@ -2,6 +2,7 @@ class Builder
   require 'fileutils'
   require './tools/web_craftyjs_builder'
   require './tools/desktop_gosu_builder'
+  require './tools/android_libgdx_builder'
 
   # Folder to copy. Contains all the content (images, audio, etc.)
   CONTENT_FOLDER = 'content'
@@ -18,7 +19,8 @@ class Builder
   # Supported targets
   TARGETS = {
     'web-craftyjs' => 'WebCraftyJsBuilder',
-    'desktop-gosu' => 'DesktopGosuBuilder'
+    'desktop-gosu' => 'DesktopGosuBuilder',
+    'android-libgdx' => 'AndroidLibgdxBuilder'
   }
 
   # Location of target-specific source
