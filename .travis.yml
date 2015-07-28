@@ -4,6 +4,7 @@ rvm:
   - 1.9.3
   # Use sed to replace the SSH URL with the public URL, then initialize submodules
   # This allows us to use git@github.com locally, but https:// for builds.
+before_install:  
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
   # Install all submodules
