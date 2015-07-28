@@ -7,7 +7,6 @@ class Crafty
   end
 
   def self.load(files, onComplete)
-    puts "@@@ SELF LOAD #{files}"
     # `files` is an object with $$keys and stuff. That's not what Crafty wants.
     # Crafty demands a hash: { :images => [ ... ], :audio => [ ...] }
     # The native to_n function converts it for us, but only on `files`, not on
