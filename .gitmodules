@@ -3,4 +3,4 @@
 	url = https://github.com/ashes999/mrubymix.git
 [submodule "template/android-libgdx"]
 	path = template/android-libgdx
-	url = git@github.com:ashes999/libgdx-ruboto.git
+	url = http://github.com/ashes999/libgdx-ruboto.git
