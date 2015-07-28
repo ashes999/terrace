@@ -1,9 +1,7 @@
+# http://lint.travis-ci.org/
 language: ruby
 rvm:
   - 1.9.3
-git:
-  # Handle git submodules yourself
-  - submodules: false
   # Use sed to replace the SSH URL with the public URL, then initialize submodules
   # This allows us to use git@github.com locally, but https:// for builds.
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
