@@ -1,11 +1,6 @@
 require 'java'
 
 Dir["../libs/\*.jar"].each { |jar| require jar; puts "Required #{jar}" }
-#require "libs/gdx-1.6.3.jar"
-#require "libs/gdx-box2d-1.6.3.jar"
-#require "libs/gdx-backend-lwjgl-1.6.3.jar"
-#require "libs/gdx-platform-1.6.3-natives-desktop.jar"
-#require "libs/gdx-box2d-platform-1.6.3-natives-desktop.jar"
 
 java_import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 java_import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
