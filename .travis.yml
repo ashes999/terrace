@@ -10,4 +10,3 @@ before_install:
   - gem install ruboto
 install:
   - ruby build.rb web-craftyjs
-  - ruby build.rb android-libgdx
