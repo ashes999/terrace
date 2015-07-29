@@ -8,14 +8,36 @@ java_import com.badlogic.gdx.Input
 java_import com.badlogic.gdx.graphics.GL20
 java_import com.badlogic.gdx.graphics.Texture
 java_import com.badlogic.gdx.graphics.g2d.SpriteBatch
+java_import com.badlogic.gdx.InputAdapter
+
+class TouchInputAdapter < InputAdapter # TODO: switch to InputMultiplexer?
+=begin
+	def touchDown (x, y, pointer, button)
+		MainGame.instance.on_touch(x, y)
+		return true # return true to indicate the event was handled
+	end
+=end
+	def touchUp (x, y, pointer, button)
+		MainGame.instance.on_touch(x, y)
+		return true # return true to indicate the event was handled
+	end
+end
 
 # Your main game class. If you change the class name, make sure you update
 # libgdx_activity.rb to specify the new game name.
 class MainGame < ApplicationAdapter
 
+	@@instance = nil
+	def self.instance
+		return @@instance
+	end
+
 	def create
+		@@instance = self
 		@batch = SpriteBatch.new
 		@last_update = Time.new
+		Gdx.input.setInputProcessor(TouchInputAdapter.new)
+
 =begin
 		touches = 0
 	  t = Entity.new(TextComponent.new, TwoDComponent.new)
@@ -29,7 +51,7 @@ class MainGame < ApplicationAdapter
 		puts "Location of e is #{@e.x}, #{@e.y}"
 
 	  @e.touch(lambda {
-			puts "TOUCHY!"
+			puts "TOUCH registered at #{Time.new}!"
 	    #@e.play('noise.ogg')
 	    #touches += 1
 	    #t.text("Touches: #{touches}")
@@ -45,23 +67,22 @@ class MainGame < ApplicationAdapter
 		@batch.end
 	end
 
+	### internal
+
+	def on_touch(x, y)
+		@e.on_touch(x, y)
+	end
+
 	private
 
 	def update
 		now = Time.new
 		elapsed_seconds = now - @last_update
 		process_keyboard_input(elapsed_seconds)
-		process_mouse_input
 		@last_update = now
 	end
 
 	def process_keyboard_input(elapsed_seconds)
 		@e.on_key_press(elapsed_seconds)
-	end
-
-	def process_mouse_input
-		if Gdx.input.isButtonPressed(Input::Buttons::LEFT)
-			@e.on_touch
-		end
 	end
 end
