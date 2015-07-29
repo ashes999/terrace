@@ -1,4 +1,5 @@
-# require ./lib/TARGET/terrace.rb
+#= require ./lib/common/terrace_common.rb
+#= require ./lib/TARGET/terrace.rb
 
 java_import com.badlogic.gdx.ApplicationAdapter
 java_import com.badlogic.gdx.Gdx
@@ -12,13 +13,27 @@ java_import com.badlogic.gdx.graphics.g2d.SpriteBatch
 # libgdx_activity.rb to specify the new game name.
 class MainGame < ApplicationAdapter
 
-	VELOCITY_PER_SECOND = 128
-
 	def create
 		@batch = SpriteBatch.new
-		@img = Texture.new("badlogic.jpg");
 		@last_update = Time.new
-		@coordinates = { :x => 32, :y => 64 }
+=begin
+		touches = 0
+	  t = Entity.new(TextComponent.new, TwoDComponent.new)
+	  t.text('Touches: 0')
+	  t.move(8, 8)
+=end
+	  @e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new)#, AudioComponent.new)
+	  @e.image('badlogic.jpg')
+	  @e.move_with_keyboard
+	  puts "Size of e is #{@e.width}x#{@e.height}"
+		puts "Location of e is #{@e.x}, #{@e.y}"
+
+	  @e.touch(lambda {
+			puts "TOUCHY!"
+	    #@e.play('noise.ogg')
+	    #touches += 1
+	    #t.text("Touches: #{touches}")
+	  })
 	end
 
 	def render
@@ -26,7 +41,7 @@ class MainGame < ApplicationAdapter
 		Gdx.gl.glClearColor(0.25, 0.5, 0.75, 1)
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 		@batch.begin
-		@batch.draw(@img, @coordinates[:x], @coordinates[:y])
+		@e.draw(@batch)
 		@batch.end
 	end
 
@@ -35,19 +50,18 @@ class MainGame < ApplicationAdapter
 	def update
 		now = Time.new
 		elapsed_seconds = now - @last_update
-
-		if Gdx.input.isKeyPressed(Input::Keys::LEFT) || Gdx.input.isKeyPressed(Input::Keys::A)
-			@coordinates[:x] -= VELOCITY_PER_SECOND * elapsed_seconds
-		end
-		if Gdx.input.isKeyPressed(Input::Keys::RIGHT) || Gdx.input.isKeyPressed(Input::Keys::D)
-			@coordinates[:x] += VELOCITY_PER_SECOND * elapsed_seconds
-		end
-		if Gdx.input.isKeyPressed(Input::Keys::UP) || Gdx.input.isKeyPressed(Input::Keys::W)
-			@coordinates[:y] -= VELOCITY_PER_SECOND * elapsed_seconds
-		end
-		if Gdx.input.isKeyPressed(Input::Keys::DOWN) || Gdx.input.isKeyPressed(Input::Keys::S)
-			@coordinates[:y] += VELOCITY_PER_SECOND * elapsed_seconds
-		end
+		process_keyboard_input(elapsed_seconds)
+		process_mouse_input
 		@last_update = now
+	end
+
+	def process_keyboard_input(elapsed_seconds)
+		@e.on_key_press(elapsed_seconds)
+	end
+
+	def process_mouse_input
+		if Gdx.input.isButtonPressed(Input::Buttons::LEFT)
+			@e.on_touch
+		end
 	end
 end
