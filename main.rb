@@ -9,6 +9,8 @@ java_import com.badlogic.gdx.graphics.GL20
 java_import com.badlogic.gdx.graphics.Texture
 java_import com.badlogic.gdx.graphics.g2d.SpriteBatch
 java_import com.badlogic.gdx.InputAdapter
+java_import com.badlogic.gdx.assets.AssetManager
+java_import com.badlogic.gdx.audio.Sound
 
 class TouchInputAdapter < InputAdapter # TODO: switch to InputMultiplexer?
 =begin
@@ -27,43 +29,74 @@ end
 # libgdx_activity.rb to specify the new game name.
 class MainGame < ApplicationAdapter
 
+	attr_reader :manager
+
 	@@instance = nil
 	def self.instance
 		return @@instance
+	end
+
+	def initialize
+		@loaded = false
+	end
+
+	def load_content(assets, lambda)
+		@manager = AssetManager.new
+
+		assets[:images].each { |i| @manager.load(i, Texture.java_class) }
+		assets[:audio].each { |a| @manager.load(a, Sound.java_class ) }
+
+		# TODO: maybe we want to utilize asynchronous loading later
+		# See: https://github.com/libgdx/libgdx/wiki/Asset-manager
+		# For now, just go synchronous
+
+		puts "Loading assets ..."
+		@manager.finishLoading
+		@loaded = true
+		puts "... assets loaded! Starting game ..."
+		lambda.call
 	end
 
 	def create
 		@@instance = self
 		@batch = SpriteBatch.new
 		@last_update = Time.new
+
+		TextComponent.create
 		Gdx.input.setInputProcessor(TouchInputAdapter.new)
 
-=begin
-		touches = 0
-	  t = Entity.new(TextComponent.new, TwoDComponent.new)
-	  t.text('Touches: 0')
-	  t.move(8, 8)
-=end
-	  @e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new)#, AudioComponent.new)
-	  @e.image('badlogic.jpg')
-	  @e.move_with_keyboard
-	  puts "Size of e is #{@e.width}x#{@e.height}"
-		puts "Location of e is #{@e.x}, #{@e.y}"
+		load_content({
+			:images => ['images/fox.png', 'images/emblem.png'],
+			:audio => ['audio/noise.ogg']
+		}, lambda {
+			touches = 0
+		  @t = Entity.new(TextComponent.new, TwoDComponent.new)
+		  @t.text('Touches: 0')
+		  @t.move(8, 8)
 
-	  @e.touch(lambda {
-			puts "TOUCH registered at #{Time.new}!"
-	    #@e.play('noise.ogg')
-	    #touches += 1
-	    #t.text("Touches: #{touches}")
-	  })
+		  @e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
+		  @e.image('images/fox.png')
+		  @e.move_with_keyboard
+		  puts "Size of e is #{@e.width}x#{@e.height}"
+			puts "Location of e is #{@e.x}, #{@e.y}"
+
+		  @e.touch(lambda {
+				puts "TOUCH registered at #{Time.new}!"
+		    @e.play('audio/noise.ogg', { :loop => true })
+		    touches += 1
+		    @t.text("Touches: #{touches}")
+		  })
+		})
 	end
 
 	def render
+		return unless @loaded
 		update
 		Gdx.gl.glClearColor(0.25, 0.5, 0.75, 1)
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 		@batch.begin
-		@e.draw(@batch)
+		ImageComponent.draw(@batch)
+		TextComponent.draw(@batch)
 		@batch.end
 	end
 

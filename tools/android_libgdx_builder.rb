@@ -1,6 +1,7 @@
 class AndroidLibgdxBuilder < Builder
   TARGET = 'android-libgdx'
   OUTPUT_FILE = 'src/main_game.rb'
+  ANDROID_CONTENT_FOLDER = 'assets'
 
   def initialize(args)
     @source_folder = args[:source_folder]
@@ -16,6 +17,12 @@ class AndroidLibgdxBuilder < Builder
 
     # Copy the whole Android template_folder
     FileUtils.cp_r("#{@template_folder}", "#{@output_folder}")
+
+    # Copy over the content_folder. This will be slow with big content folders.
+    puts "Copying content folder ..."
+    FileUtils.rm_rf "#{@output_folder}/#{ANDROID_CONTENT_FOLDER}"
+    FileUtils.cp_r(@content_folder, @output_folder)
+    File.rename("#{@output_folder}/#{@content_folder}", "#{@output_folder}/#{ANDROID_CONTENT_FOLDER}")
 
     # Write main code file.
     File.open("#{@output_folder}/#{OUTPUT_FILE}", 'w') { |f|
