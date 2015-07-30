@@ -21,6 +21,9 @@ class Game < Gosu::Window
     self.show
   end
 
+  def create
+  end
+
   ### Internal
 
   # Always show the mouse

@@ -10,4 +10,7 @@ class Game
   def load_content(files, callback)
     Crafty.load(files, callback)
   end
+
+  def create
+  end
 end

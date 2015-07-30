@@ -7,6 +7,7 @@
 #= require ./lib/TARGET/terrace.rb
 
 class MainGame < Game
+
   def initialize
     super(800, 600)
   end
@@ -36,3 +37,5 @@ class MainGame < Game
     })
   end
 end
+
+MainGame.new.create unless RUBY_PLATFORM == 'java'
