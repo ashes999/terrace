@@ -1,6 +1,3 @@
-[submodule "mrubymix2"]
-	path = 3rdparty/mrubymix
-	url = https://github.com/ashes999/mrubymix.git
 [submodule "template/android-libgdx"]
 	path = template/android-libgdx
 	url = http://github.com/ashes999/libgdx-ruboto.git
