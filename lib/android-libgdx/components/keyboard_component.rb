@@ -1,8 +1,11 @@
 class KeyboardComponent < BaseComponent
 
+	@@all = []
+
 	VELOCITY_PER_SECOND = 128
 
 	def initialize
+		@@all << self
 		@move_with_arrows = false
 	end
 
@@ -10,7 +13,13 @@ class KeyboardComponent < BaseComponent
     @move_with_arrows = true
   end
 
-	def on_key_press(elapsed_seconds)
+	### internal
+
+	def self.process_keyboard_input(elapsed_seconds)
+		@@all.each { |k| k.process_keyboard_input(elapsed_seconds) }
+	end
+
+	def process_keyboard_input(elapsed_seconds)
 		return unless @move_with_arrows
 
 		if Gdx.input.isKeyPressed(Input::Keys::LEFT) || Gdx.input.isKeyPressed(Input::Keys::A)

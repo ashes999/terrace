@@ -21,6 +21,12 @@ class KeyboardComponent < BaseComponent
 
   ### internal
 
+  def self.process_keyboard_input(elapsed_seconds)
+    @@all.each do |k|
+      k.update(elapsed_seconds)
+    end
+  end
+
   def update(elapsed_seconds)
     return unless @move_with_arrows
     actual_move = SPEED * elapsed_seconds

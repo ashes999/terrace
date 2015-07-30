@@ -21,8 +21,9 @@ class AndroidLibgdxBuilder < Builder
     # Copy over the content_folder. This will be slow with big content folders.
     puts "Copying content folder ..."
     FileUtils.rm_rf "#{@output_folder}/#{ANDROID_CONTENT_FOLDER}"
-    FileUtils.cp_r(@content_folder, @output_folder)
-    File.rename("#{@output_folder}/#{@content_folder}", "#{@output_folder}/#{ANDROID_CONTENT_FOLDER}")
+    target_folder = "#{@output_folder}/#{ANDROID_CONTENT_FOLDER}"
+    FileUtils.mkdir_p target_folder # forces creating of assets/content folder
+    FileUtils.cp_r(@content_folder, target_folder)
 
     # Write main code file.
     File.open("#{@output_folder}/#{OUTPUT_FILE}", 'w') { |f|
