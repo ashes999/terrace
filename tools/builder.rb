@@ -33,11 +33,10 @@ class Builder
   # This causes us to load target-specific code.
   TERRACE_TARGET_REQUIRE = 'require ./lib/TARGET/terrace.rb'
 
-  # mrubymix requires a "require" statement at the top-level. To solve this,
-  # we use one require for the common code, and a placeholder statement
-  # (see TERRACE_TARGET_REQUIRE). At runtime, we plug in the target name,
-  # thus causing it to require the target-specific files.  This is the name
-  # of the temporary file we feed in, which has the swapped-in target require.
+  # mrubymix requires a "require" statement at the top-level, and we need to
+  # combine classes from the common directory with the platform one.
+  # This file is a copy of main.rb, but with the require for the TARGET folder
+  # replaced with the actual command-line target (eg. web-craftyjs).
   GENERATED_MAIN = 'main-generated.rb'
 
   # Builds and combines all ruby files; generates final output project
