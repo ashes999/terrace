@@ -2,30 +2,39 @@
 
 [![build status](https://travis-ci.org/ashes999/terrace.svg?branch=master)](https://travis-ci.org/ashes999/terrace)
 
-**Our vision:** write Ruby code once; run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
+**Our vision:** write Ruby code and run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
 
-Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web), Gosu (desktop), and libGDX (android) even though we could use `mruby` with SDL.
+Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web), Gosu (desktop), and libGDX (android) even though we could use `mruby` with SDL everywhere.
 
 # Getting Started
 
-To start, edit `main.rb` and add code for your game, like so:
+To start, `main.rb` looks like this:
 
 ```
-# Load the terrace library, and target-specific code. Do not remove these!
-#= require ./lib/common/terrace_common.rb
-#= require ./lib/TARGET/terrace.rb
 g = Game.new(800, 600)
 g.load_content({
-  :images => ['content/images/fox.png', 'content/images/emblem.png']
+  :images => ['content/images/fox.png'],
+  :audio => ['content/audio/noise.ogg']
 }, lambda {
-  e = Entity.new(TwoDComponent.new, KeyboardComponent.new)
+  touches = 0
+  t = Entity.new(TextComponent.new, TwoDComponent.new)
+  t.text('Touches: 0')
+  t.move(8, 8)
+
+  e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
   e.image('content/images/fox.png')
   e.move_with_keyboard
-  e.touch(lambda { puts "The time is #{Time.new}" })
+  puts "Size of e is #{e.width}x#{e.height}"
+
+  e.touch(lambda {
+    e.play('content/audio/noise.ogg')
+    touches += 1
+    t.text("Touches: #{touches}")
+  })
 })
 ```
 
-This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys. Clicking it with the mouse displays the current time.
+This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys (or `WASD`). Clicking the fox with the mouse (or touching it on Android) plays a sound and increments the touch count.  The sample also pre-loads all the necessary images and audio files.
 
 To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
@@ -46,12 +55,17 @@ A summary of the main components and their methods:
 
 ## Important Points to Note
 
-- WebRuby uses `console.log` for error handling; please use Chrome to debug (you won't see the console messages in FireFox).
-- The meaning of backticks changes; for the web target, you use backticks to execute raw Javascript. For the desktop target, backticks execute locally.
+- The meaning of backticks changes per platform:
+
+- **Web:** backticks execute raw Javascript
+- **Desktop:** backticks execute local commands
+- **Android:** backticks execute android commands
 
 # Supported Platforms and Targets
 
-Terrace is two pieces: a common Ruby platform (eg. our `entity` class), and target-specific code. The target-specific code implements compnents (such as `TwoDComponent`) in whatever that platform's back-end is.
+Two pieces make up terrace:
+- A common Ruby-agnostic platform (eg. our `entity` class)
+- Target-specific code (eg. `ImageComponent` for the web target).
 
 Terrace supports the following targets:
 
@@ -61,9 +75,9 @@ Terrace supports the following targets:
 
 ## How Terrace Works
 
-When you run `build.rb`, it uses [mrubymix](https://github.com/xxuejie/mrubymix) to combine both the common (pure ruby) code with the specified target (platform-specific) code (this is why we use `#= require` instead of `require`).
+When you run `build.rb`, it uses [mrubymix](https://github.com/xxuejie/mrubymix) to combine both the common Rby code with the specified target (platform-specific) code (this is why we use `#= require` instead of `require`).
 
-All the code (including common and target code) libs in `lib`, while templates (eg. HTML templates for web, Android project template) lives in `templates`.
+All the code (including common and target code) libs in `lib`, while templates (eg. HTML templates for web, Android project templates) live in `templates`.
 
 ## Debug vs. Release Mode
 
@@ -72,9 +86,9 @@ To build your application in release mode, add `release` to the end of the comma
 - **Desktop:** Release mode builds compiled binaries. On Windows, you get a `game.exe` file to `bin\desktop-gosu`. You can ship this, along with the `content` directory together, as your final, self-executable game.
 - **Android:** Release mode builds the APK in release mode. Which key file to use is TBD.
 
-# Contributing to Terrace
+# Target Setup
 
-If you plan to contribute to `terrace`, you need to set up Ruby (1.9.3 or newer), along with platform-specific pieces:
+To use Terrace, you need Ruby (1.9.3 or newer), along with platform-specific pieces:
 
 ## Web
 To build binaries for the web, you need:
