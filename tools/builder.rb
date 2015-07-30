@@ -1,8 +1,5 @@
 class Builder
   require 'fileutils'
-  require './tools/web_craftyjs_builder'
-  require './tools/desktop_gosu_builder'
-  require './tools/android_libgdx_builder'
 
   # Folder to copy. Contains all the content (images, audio, etc.)
   CONTENT_FOLDER = 'content'
@@ -16,7 +13,7 @@ class Builder
   # Location of built/generated output/binaries
   OUTPUT_DIR = 'bin'
 
-  # Supported targets
+  # Supported targets, and their builder classes
   TARGETS = {
     'web-craftyjs' => 'WebCraftyJsBuilder',
     'desktop-gosu' => 'DesktopGosuBuilder',
@@ -61,6 +58,9 @@ class Builder
     end
 
     puts "Building #{@target} target in #{mode} mode ..."
+    require './tools/web_craftyjs_builder' if @target.start_with?('web')
+    require './tools/desktop_gosu_builder' if @target.start_with?('desktop')
+    require './tools/android_libgdx_builder' if @target.start_with?('android')
 
     builder_class = Object.const_get(TARGETS[@target])
     @builder = builder_class.new({
@@ -101,7 +101,8 @@ class Builder
     FileUtils.rm_f "#{OUTPUT_DIR}/#{ENTRY_POINT}"
     FileUtils.mkdir_p "#{OUTPUT_DIR}"
 
-    `ruby #{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
+    `ruby -I . #{MRUBYMIX} #{GENERATED_MAIN} #{OUTPUT_DIR}/#{ENTRY_POINT}`
+    raise 'Running mrubymix failed' unless $?.success?
     FileUtils.mv(GENERATED_MAIN, "#{OUTPUT_DIR}/#{GENERATED_MAIN}")
 
     puts ' done.'
