@@ -19,17 +19,16 @@ class MainGame < Game
       :images => ['content/images/fox.png', 'content/images/background.jpg'],
       :audio => ['content/audio/noise.ogg']
     }, lambda {
-      touches = 0
-      t = Entity.new(TextComponent.new, TwoDComponent.new)
-      t.text('Touches: 0')
-      t.move(8, 8)
-
       Entity.new(TwoDComponent.new, ImageComponent.new).image('content/images/background.jpg')
 
       e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
       e.image('content/images/fox.png')
       e.move_with_keyboard
-      puts "Size of e is #{e.width}x#{e.height}"
+      
+      touches = 0
+      t = Entity.new(TextComponent.new, TwoDComponent.new)
+      t.text('Touches: 0')
+      t.move(8, 8)
 
       e.touch(lambda {
         e.play('content/audio/noise.ogg')
