@@ -83,6 +83,10 @@ class Game < ApplicationAdapter
     @last_update = now
 	end
 
+	def self.launch(game_class)
+		# Do nothing. Android's LibgdxActivity takes care of calling new and create.
+	end
+
 	### internal
 
 	private

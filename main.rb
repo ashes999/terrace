@@ -38,4 +38,4 @@ class MainGame < Game
   end
 end
 
-MainGame.new.create unless RUBY_PLATFORM == 'java'
+Game.launch(MainGame)

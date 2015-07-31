@@ -13,4 +13,8 @@ class Game
 
   def create
   end
+
+  def self.launch(game_class)
+    game_class.new.create
+  end
 end

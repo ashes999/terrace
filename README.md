@@ -11,27 +11,39 @@ Our current methodology is to **use high-velocity stacks instead of a common cod
 To start, `main.rb` looks like this:
 
 ```
-g = Game.new(800, 600)
-g.load_content({
-  :images => ['content/images/fox.png'],
-  :audio => ['content/audio/noise.ogg']
-}, lambda {
-  touches = 0
-  t = Entity.new(TextComponent.new, TwoDComponent.new)
-  t.text('Touches: 0')
-  t.move(8, 8)
+class MainGame < Game
 
-  e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
-  e.image('content/images/fox.png')
-  e.move_with_keyboard
-  puts "Size of e is #{e.width}x#{e.height}"
+  def initialize
+    super(800, 600)
+  end
 
-  e.touch(lambda {
-    e.play('content/audio/noise.ogg')
-    touches += 1
-    t.text("Touches: #{touches}")
-  })
-})
+  def create
+    super
+
+    load_content({
+      :images => ['content/images/fox.png', 'content/images/emblem.png'],
+      :audio => ['content/audio/noise.ogg']
+    }, lambda {
+      touches = 0
+      t = Entity.new(TextComponent.new, TwoDComponent.new)
+      t.text('Touches: 0')
+      t.move(8, 8)
+
+      e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
+      e.image('content/images/fox.png')
+      e.move_with_keyboard
+      puts "Size of e is #{e.width}x#{e.height}"
+
+      e.touch(lambda {
+        e.play('content/audio/noise.ogg')
+        touches += 1
+        t.text("Touches: #{touches}")
+      })
+    })
+  end
+end
+
+Game.launch(MainGame)
 ```
 
 This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys (or `WASD`). Clicking the fox with the mouse (or touching it on Android) plays a sound and increments the touch count.  The sample also pre-loads all the necessary images and audio files.
