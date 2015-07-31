@@ -11,6 +11,8 @@ Our current methodology is to **use high-velocity stacks instead of a common cod
 To start, `main.rb` looks like this:
 
 ```
+# ... some requires and other notes ...
+
 class MainGame < Game
 
   def initialize
@@ -21,18 +23,19 @@ class MainGame < Game
     super
 
     load_content({
-      :images => ['content/images/fox.png', 'content/images/emblem.png'],
+      :images => ['content/images/fox.png', 'content/images/background.jpg'],
       :audio => ['content/audio/noise.ogg']
     }, lambda {
-      touches = 0
-      t = Entity.new(TextComponent.new, TwoDComponent.new)
-      t.text('Touches: 0')
-      t.move(8, 8)
+      Entity.new(TwoDComponent.new, ImageComponent.new).image('content/images/background.jpg')
 
       e = Entity.new(ImageComponent.new, KeyboardComponent.new, TwoDComponent.new, TouchComponent.new, AudioComponent.new)
       e.image('content/images/fox.png')
       e.move_with_keyboard
-      puts "Size of e is #{e.width}x#{e.height}"
+
+      touches = 0
+      t = Entity.new(TextComponent.new, TwoDComponent.new)
+      t.text('Touches: 0')
+      t.move(8, 8)
 
       e.touch(lambda {
         e.play('content/audio/noise.ogg')
@@ -46,7 +49,7 @@ end
 Game.launch(MainGame)
 ```
 
-This sample creates a new `800x600` game with a fox sprite that moves with the arrow keys (or `WASD`). Clicking the fox with the mouse (or touching it on Android) plays a sound and increments the touch count.  The sample also pre-loads all the necessary images and audio files.
+This sample creates a new `800x600` game with a fox sprite on a space background. The fox moves with the arrow keys (or `WASD`). Clicking the fox with the mouse (or touching it on Android) plays a sound and increments the touch count, which is displayed as text.  The sample also pre-loads all the necessary images and audio files.
 
 To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
