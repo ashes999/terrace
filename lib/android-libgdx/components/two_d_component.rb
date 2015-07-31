@@ -6,9 +6,8 @@ class TwoDComponent < BaseComponent
 	end
 
 	def move(x, y)
-		@x = x
-		# Treat top of the screen as y=0
-		@y = Gdx.graphics.getHeight - y
+		@x = x		
+		@y = y
 	end
 
 	def color(color)

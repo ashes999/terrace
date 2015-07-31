@@ -1,6 +1,7 @@
 java_import com.badlogic.gdx.graphics.g2d.BitmapFont
 
 class TextComponent < BaseComponent
+
   @@all = []
 
   def self.all
@@ -30,6 +31,6 @@ class TextComponent < BaseComponent
   end
 
   def draw(spritebatch)
-    @font.draw(spritebatch, @display_text, @entity.x, @entity.y)
+    @font.draw(spritebatch, @display_text, @entity.x, Gdx.graphics.height - @entity.y)
   end
 end
