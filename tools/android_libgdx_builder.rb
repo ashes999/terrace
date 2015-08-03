@@ -1,10 +1,9 @@
-require './tools/desktop_libgdx_builder'
+require './tools/libgdx_builder'
 
-class AndroidLibgdxBuilder < DesktopLibgdxBuilder
+class AndroidLibgdxBuilder < LibgdxBuilder
 
   def build(code)
     super
-    # copy sources into src?
     
     # Build the debug APK
     pwd = Dir.pwd
