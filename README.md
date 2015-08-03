@@ -4,7 +4,7 @@
 
 **Our vision:** write Ruby code and run your game on desktop, mobile, and in-browser. We do this by providing a "standard" Ruby interface, and generating equivalent code for various platforms through various back-ends (like `webruby` for web support).
 
-Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web), Gosu (desktop), and libGDX (android) even though we could use `mruby` with SDL everywhere.
+Our current methodology is to **use high-velocity stacks instead of a common code-base.** This means we use CraftyJS (web) and libGDX (desktop/android) even though we could use `mruby` with SDL everywhere.
 
 # Getting Started
 
@@ -53,7 +53,7 @@ This sample creates a new `800x600` game with a fox sprite on a space background
 
 To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
-To run your game on your desktop, run `ruby build.rb desktop-gosu`. This will generate a `main.rb` file under `bin/dekstop-gosu`. Run it in Ruby to launch your game. (You can build it in `release` mode, with Ocra, to generate an executable on Windows.)
+To run your game on your desktop, run `ruby build.rb desktop-libgdx`. This will generate a `main_game.rb` file under `bin/dekstop-libgdx`. Run it in JRuby to launch your game.
 
 To run your game on android, run `ruby builld.rb android-libgdx`. Provided you have the Ruboto installed correctly, this will generate a `Libgdx-Deebug.apk` file under `bin/android-libgdx/bin` which you can deploy and test via `adb`.
 
@@ -85,8 +85,8 @@ Two pieces make up terrace:
 Terrace supports the following targets:
 
 - **web-craftyjs:** [OpalRB](https://github.com/opal/opal) (Ruby to JS converter) with [CraftyJS](https://github.com/craftyjs/Crafty) (HTML5 game engine)
-- **desktop-gosu:** [Gosu](https://github.com/gosu/gosu) (desktop game engine)
-- **android-libgdx:** [JRuby](https://github.com/jruby/jruby) (Ruby in Java) and [Ruboto](https://github.com/ruboto/ruboto) (JRuby on Android) with [libGDX](https://github.com/libgdx/libgdx) (cross-platform game engine)
+- **desktop-libgdx:** [JRuby](https://github.com/jruby/jruby) (Ruby in Java) and with [libGDX](https://github.com/libgdx/libgdx) (cross-platform game engine)
+- **android-libgdx:** Same as above, with [Ruboto](https://github.com/ruboto/ruboto) (JRuby on Android)
 
 ## How Terrace Works
 
@@ -98,8 +98,8 @@ All the code (including common and target code) libs in `lib`, while templates (
 
 To build your application in release mode, add `release` to the end of the command-line, eg. `ruby build.rb desktop-gosu release`. What this does changes by platform:
 
-- **Desktop:** Release mode builds compiled binaries. On Windows, you get a `game.exe` file to `bin\desktop-gosu`. You can ship this, along with the `content` directory together, as your final, self-executable game.
-- **Android:** Release mode builds the APK in release mode. Which key file to use is TBD.
+- **Desktop:** TBD: Release mode builds compiled, self-contained binaries. 
+- **Android:** TBD: Release mode builds the APK in release mode, which uses the key file.
 
 # Target Setup
 
@@ -110,13 +110,10 @@ To build binaries for the web, you need:
 
 - The `opal` gem (0.8.0)
 
-## Windows
-To build binaries for the desktop target, you also need:
+## Desktop
+To run the desktop target, you also need:
 
-- The `gosu` gem (0.9.2). Follow setup instructions [from the gosu wiki](https://github.com/gosu/gosu/wiki).
-- The `ocra` gem (1.9.5).
-
-When you run the `release` build on Windows, you'll get an executable.
+- JRuby 1.7.13 or newer
 
 ## Android
 Arguably the most complex target setup-wise, you need to set up a lot of things. Thankfully, Ruboto covers it.
