@@ -40,16 +40,17 @@ class Builder
   GENERATED_MAIN = 'main-generated.rb'
 
   # Builds and combines all ruby files; generates final output project
-	def build
-    if ARGV[0].nil?
+	def build(target = nil, mode = nil)
+    if target.nil? && ARGV[0].nil?
       puts "Please specify a target to build. Valid targets are: #{TARGETS.keys}"
       return
     else
-      @target = ARGV[0]
-      raise "#{ARGV[0]} is not a valid target. Valid targets are: #{TARGETS.keys}" if !TARGETS.has_key?(@target)
+      @target = target || ARGV[0]
+      raise "#{@target} is not a valid target. Valid targets are: #{TARGETS.keys}" if !TARGETS.has_key?(@target)
     end
 
-    mode = ARGV[1] == 'release' ? 'release' : 'debug'
+    mode = ARGV[1] if mode.nil?
+    mode = (mode == 'release') ? 'release' : 'debug'
 
     ensure_file_exists(ENTRY_POINT)
     if !File.read(ENTRY_POINT).include?(TERRACE_TARGET_REQUIRE)
