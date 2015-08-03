@@ -17,6 +17,7 @@ class Builder
   TARGETS = {
     'web-craftyjs' => 'WebCraftyJsBuilder',
     'desktop-gosu' => 'DesktopGosuBuilder',
+    'desktop-libgdx' => 'DesktopLibgdxBuilder',
     'android-libgdx' => 'AndroidLibgdxBuilder'
   }
 
@@ -59,6 +60,7 @@ class Builder
     puts "Building #{@target} target in #{mode} mode ..."
     require './tools/web_craftyjs_builder' if @target.start_with?('web')
     require './tools/desktop_gosu_builder' if @target.start_with?('desktop')
+    require './tools/desktop_libgdx_builder' if @target.start_with?('desktop')
     require './tools/android_libgdx_builder' if @target.start_with?('android')
 
     builder_class = Object.const_get(TARGETS[@target])
