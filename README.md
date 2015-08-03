@@ -51,11 +51,11 @@ Game.launch(MainGame)
 
 This sample creates a new `800x600` game with a fox sprite on a space background. The fox moves with the arrow keys (or `WASD`). Clicking the fox with the mouse (or touching it on Android) plays a sound and increments the touch count, which is displayed as text.  The sample also pre-loads all the necessary images and audio files.
 
-To run your game in-browser, run `ruby build.rb web-craftyjs`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
+To run your game in-browser, run `rake` or `rake build:web`. This will generate the HTML5 version under `bin/web-craftyjs`. To play the game, open `bin/web-craftyjs/index.html` in your browser.
 
-To run your game on your desktop, run `ruby build.rb desktop-libgdx`. This will generate a `main_game.rb` file under `bin/dekstop-libgdx`. Run it in JRuby to launch your game.
+To run your game on your desktop, run `rake build:desktop`. This will generate a `main_game.rb` file under `bin/desktop-libgdx`. Run it with JRuby to launch your game.
 
-To run your game on android, run `ruby builld.rb android-libgdx`. Provided you have the Ruboto installed correctly, this will generate a `Libgdx-Deebug.apk` file under `bin/android-libgdx/bin` which you can deploy and test via `adb`.
+To run your game on android, run `rake build:android`. Provided you have [Ruboto installed and setup correctly](https://github.com/ashes999/terrace#android), this will generate a `Libgdx-Debug.apk` file under `bin/android-libgdx/bin` which you can deploy and test via `adb`.
 
 # Main Components
 
@@ -67,14 +67,6 @@ A summary of the main components and their methods:
 - **TouchComponent:** Receives touches. Has `touch(callback)`
 - **AudioComponent:** Can play a sound. Has `play(filename, { :loop => true/false })`
 - **TextComponent:** Displays text. Can `move`, and set `text(display_text)`.
-
-## Important Points to Note
-
-- The meaning of backticks changes per platform:
-
-- **Web:** backticks execute raw Javascript
-- **Desktop:** backticks execute local commands
-- **Android:** backticks execute android commands
 
 # Supported Platforms and Targets
 
@@ -88,9 +80,16 @@ Terrace supports the following targets:
 - **desktop-libgdx:** [JRuby](https://github.com/jruby/jruby) (Ruby in Java) and with [libGDX](https://github.com/libgdx/libgdx) (cross-platform game engine)
 - **android-libgdx:** Same as above, with [Ruboto](https://github.com/ruboto/ruboto) (JRuby on Android)
 
+
+The meaning of backticks also changes per platform:
+
+- **Web:** backticks execute raw Javascript
+- **Desktop:** backticks execute local commands
+- **Android:** backticks execute android commands
+
 ## How Terrace Works
 
-When you run `build.rb`, it uses [mrubymix](https://github.com/xxuejie/mrubymix) to combine both the common Rby code with the specified target (platform-specific) code (this is why we use `#= require` instead of `require`).
+When you run `rake build:<target>`, it uses [mrubymix](https://github.com/xxuejie/mrubymix) to combine both the common Rby code with the specified target (platform-specific) code (this is why we use `#= require` instead of `require`).
 
 All the code (including common and target code) libs in `lib`, while templates (eg. HTML templates for web, Android project templates) live in `templates`.
 
@@ -98,7 +97,7 @@ All the code (including common and target code) libs in `lib`, while templates (
 
 To build your application in release mode, add `release` to the end of the command-line, eg. `ruby build.rb desktop-gosu release`. What this does changes by platform:
 
-- **Desktop:** TBD: Release mode builds compiled, self-contained binaries. 
+- **Desktop:** TBD: Release mode builds compiled, self-contained binaries.
 - **Android:** TBD: Release mode builds the APK in release mode, which uses the key file.
 
 # Target Setup
