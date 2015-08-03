@@ -2,7 +2,7 @@
 class TextComponent < BaseComponent
 
   def text(text)
-    @entity.textFont({ size: '24px'})
+    @entity.textFont({ size: '15px'})
     @entity.textColor('FFFFFF')
     @entity.text(text)
   end
