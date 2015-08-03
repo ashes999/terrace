@@ -9,4 +9,5 @@ before_install:
   - gem install opal
   - gem install ruboto
 install:
-  - ruby build.rb web-craftyjs
+  - rake build:web
+  - rake build:desktop
