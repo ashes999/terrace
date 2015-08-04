@@ -1,1 +1,1 @@
-1.6.1
+All libGDX files are version 1.6.1. You can get them all from clicking the "Releases" link and downloading those zips from libGDX. (These are no longer published, so going forward, you  need to pull them from Maven.)
