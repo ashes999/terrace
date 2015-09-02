@@ -1,6 +1,6 @@
 class LibgdxBuilder < Builder
   TARGET = 'desktop-libgdx'
-  OUTPUT_FILE = 'src/main_game.rb'
+  OUTPUT_FILE = 'main_game.rb'
   CONTENT_FOLDER = 'assets'
   SHARED_TEMPLATE_DIR = 'shared-libgdx'
   LIB_FOLDER = 'libs'
